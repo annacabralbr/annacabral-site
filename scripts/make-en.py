@@ -62,7 +62,7 @@ PAGES['index.astro'] = [
     ('Senior Product Designer na CVC Viagens. Cuido da experiência do site e do app B2C, da busca ao checkout.',
      'Senior Product Designer at CVC Viagens, Brazil\'s largest travel company. I design the B2C website and app experience, from search to checkout.'),
     ('label="Vamos conversar ↗"', 'label="Let\'s talk ↗"'),
-    ('label="Baixar CV (PDF) ↓" link="/cv-anna-cabral.pdf"', 'label="Download CV (PDF) ↓" link="/cv-anna-cabral.pdf"'),
+    ('label="Baixar CV (PDF) ↓" link="/cv-anna-cabral.pdf"', 'label="Download CV (PDF) ↓" link="/cv-anna-cabral-en.pdf"'),
     ('<RotatingBadge />', '<RotatingBadge text="Selected work • Selected work • " />'),
     ('text="Trabalho selecionado" highlight="selecionado"', 'text="Selected work" highlight="work"'),
     ('CVC + 5 cases · 2022 — 2026', 'CVC + 5 case studies · 2022 — 2026'),
