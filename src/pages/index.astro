@@ -70,7 +70,7 @@ const cases = [
 
 const process: [string, string][] = [
     ["Problema antes do pixel", "Pesquisa, benchmark e conversa com quem opera o negócio para definir o problema certo antes de desenhar."],
-    ["Dados no caminho", "Funis, heatmaps e gravações de sessão no Clarity, GA4 e Mixpanel para achar onde as pessoas travam e priorizar."],
+    ["Testar com quem usa", "Testes de usabilidade e validação com usuários antes de entregar, para decidir com base no que as pessoas fazem, não no que a gente acha."],
     ["IA como ferramenta", "Uso IA para explorar soluções, analisar dados e montar apresentações mais rápido. A decisão final é sempre minha e validada."],
     ["Acessível e bem escrito", "Contraste, foco e microcopy fazem parte da entrega, não do ajuste final. Cada erro de formulário tem uma saída clara."],
 ]
@@ -82,11 +82,12 @@ const cvcList = ["Novas experiências do site e do app", "UX de todos os produto
     <!-- hero -->
     <section class="hero">
         <p class="label">UX/UI · Curitiba, BR · remoto</p>
-        <HeroTitle client:load text="Design de produto|orientado por" words="dados., pessoas., negócio., pesquisa." fontSize={132} interval={2200} />
+        <HeroTitle client:load text="Design de produto|orientado por" words="dados., pessoas., negócio., pesquisa., IA." fontSize={132} interval={2200} />
         <div class="hero-foot">
             <p class="body-l hero-lead">Senior Product Designer na CVC Viagens. Cuido da experiência do site e do app B2C, da busca ao checkout.</p>
             <div class="hero-actions">
                 <PillButton client:visible label="Vamos conversar ↗" link={`mailto:${EMAIL}`} />
+                <PillButton client:visible primary label="Baixar CV (PDF) ↓" link="/cv-anna-cabral.pdf" newTab />
                 <span class="hide-phone"><RotatingBadge /></span>
             </div>
         </div>
@@ -124,7 +125,7 @@ const cvcList = ["Novas experiências do site e do app", "UX de todos os produto
             <img class="photo" src="/img/1PNvVvO7W8a8BLb0U7GyowMjtJI.jpg" alt="Anna Cabral tomando café num café com plantas" width="420" height="525" loading="lazy" />
             <div class="about-text">
                 <p class="body-l">Sou Anna, Product Designer em Curitiba. Antes do digital, empreendi no setor de eventos: operação, negociação e cliente na frente o tempo todo. É daí que vem o meu jeito de trabalhar: entender o negócio, resolver o problema e entregar.</p>
-                <p class="body">Desde 2022 desenho produtos digitais para marcas como GOL/Smiles, Grupo Ultra, McDonald's e CVC Viagens. Sou tecnóloga em Design de Produto pela Anhembi Morumbi e sigo estudando dados, negócio e IA aplicada a produto.</p>
+                <p class="body">Desenho produtos digitais para marcas como GOL/Smiles, Grupo Ultra e CVC Viagens. Sou tecnóloga em Design de Produto pela Anhembi Morumbi e sigo estudando dados, negócio e IA aplicada a produto.</p>
                 <dl class="stats">
                     <div><dt class="h2">5+</dt><dd class="label">anos em product design</dd></div>
                     <div><dt class="h2">2,5</dt><dd class="label">anos no B2C da CVC</dd></div>
@@ -156,6 +157,7 @@ const cvcList = ["Novas experiências do site e do app", "UX de todos os produto
         <RevealText text="Tem um produto complexo? Vamos simplificar juntos." highlight="Vamos simplificar juntos." fontSize={120} color="#FAFAF7" align="center" />
         <div class="contact-actions">
             <PillButton client:visible primary ink="#FAFAF7" label={`${EMAIL} ↗`} link={`mailto:${EMAIL}`} />
+            <PillButton client:visible ink="#FAFAF7" label="Baixar CV (PDF) ↓" link="/cv-anna-cabral.pdf" newTab />
             <PillButton client:visible ink="#FAFAF7" label="LinkedIn ↗" link="https://www.linkedin.com/in/annapaulacabral" newTab />
         </div>
         <div class="footer-bar">
@@ -185,8 +187,9 @@ const cvcList = ["Novas experiências do site e do app", "UX de todos os produto
     }
     .hero-actions {
         display: flex;
+        flex-wrap: wrap;
         align-items: center;
-        gap: 32px;
+        gap: 16px 24px;
     }
     .work {
         padding: 40px var(--gutter) 140px;
