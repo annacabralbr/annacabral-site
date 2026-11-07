@@ -1,0 +1,72 @@
+---
+import "../styles/global.css"
+import FloatingDock from "../components/FloatingDock"
+
+interface Props {
+    title: string
+    description: string
+    back?: boolean
+}
+const { title, description, back = false } = Astro.props
+const canonical = new URL(Astro.url.pathname, Astro.site)
+---
+
+<!doctype html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+        <title>{title}</title>
+        <meta name="description" content={description} />
+        <link rel="canonical" href={canonical} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={canonical} />
+        <meta name="theme-color" content="#FAFAF7" />
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    </head>
+    <body>
+        <header class="nav">
+            {
+                back ? (
+                    <a class="navlink" href="/">
+                        <span class="u">← Anna Cabral</span>
+                    </a>
+                ) : (
+                    <a class="brand" href="/">
+                        Anna Cabral
+                    </a>
+                )
+            }
+            <nav class="nav-links" aria-label="Principal">
+                {
+                    !back && (
+                        <>
+                            <a class="navlink" href="/#cases">
+                                <span class="u">Cases</span>
+                            </a>
+                            <a class="navlink hide-phone" href="/#sobre">
+                                <span class="u">Sobre</span>
+                            </a>
+                            <a class="navlink hide-phone" href="/#processo">
+                                <span class="u">Como trabalho</span>
+                            </a>
+                        </>
+                    )
+                }
+                <a class="navlink" href="https://www.linkedin.com/in/annapaulacabral" target="_blank" rel="noopener noreferrer">
+                    <span class="u">LinkedIn ↗</span>
+                </a>
+            </nav>
+        </header>
+        <main>
+            <slot />
+        </main>
+        <slot name="after" />
+        {!back && <FloatingDock client:idle />}
+    </body>
+</html>

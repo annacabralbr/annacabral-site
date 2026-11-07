@@ -1,0 +1,378 @@
+---
+import Base from "../layouts/Base.astro"
+import HeroTitle from "../components/HeroTitle"
+import RevealText from "../components/RevealText"
+import ScreenCard from "../components/ScreenCard"
+import PillButton from "../components/PillButton"
+import ProcessAccordion from "../components/ProcessAccordion"
+import Marquee from "../components/Marquee"
+import RotatingBadge from "../components/RotatingBadge.astro"
+
+const EMAIL = "annapaulacabralbr@gmail.com"
+
+const cases = [
+    {
+        index: "01",
+        client: "Smiles · GOL · app",
+        title: "Créditos de Uber pagos com milhas",
+        meta: "Out 2022 · Rethink · lançado em 2023",
+        tags: "App · Fluxos · Microcopy · Estados de erro",
+        src: "/img/UfSPSiuMsnnQ5FxcHAvFRFEE04.png",
+        device: "mobile",
+        link: "/cases/smiles",
+        speed: 52,
+    },
+    {
+        index: "02",
+        client: "Smiles · GOL · site",
+        title: "Nova identidade da home de Carros Smiles",
+        meta: "Abr 2023 · Rethink · no ar",
+        tags: "Facelift · Design system · Web",
+        src: "/img/CSGCHDnTu5P85phq84KixpaKKQ.png",
+        device: "desktop",
+        link: "/cases/smiles-carros",
+        speed: 89,
+    },
+    {
+        index: "03",
+        client: "GOL · VoeBiz",
+        title: "O programa corporativo da GOL com a identidade da Smiles",
+        meta: "Jun–Dez 2022 · Rethink",
+        tags: "Facelift · Design system · Desktop e mobile",
+        src: "/img/EwrDDNLsFq4BICrEcrVIRtZzmk.png",
+        device: "desktop",
+        link: "/cases/voebiz",
+        speed: 74,
+    },
+    {
+        index: "04",
+        client: "Grupo Ultra · Abastece Aí (hoje KM de Vantagens)",
+        title: "Uma nova home para alcançar quem não usava o app",
+        meta: "Jan–Mar 2023 · Rethink · estrutura segue no KM de Vantagens",
+        tags: "Nova home · Testes com usuários · UI",
+        src: "/img/phH1D5Ky9R121ueamIHOlkhPBQ.png",
+        device: "mobile",
+        link: "/cases/abastece-ai",
+        speed: 44,
+    },
+] as const
+
+const process: [string, string][] = [
+    ["Problema antes do pixel", "Pesquisa, benchmark e conversa com quem opera o negócio para definir o problema certo antes de desenhar."],
+    ["Dados no caminho", "Funis, heatmaps e gravações de sessão no Clarity, GA4 e Mixpanel para achar onde as pessoas travam e priorizar."],
+    ["IA como ferramenta", "Uso IA para explorar soluções, analisar dados e montar apresentações mais rápido. A decisão final é sempre minha e validada."],
+    ["Acessível e bem escrito", "Contraste, foco e microcopy fazem parte da entrega, não do ajuste final. Cada erro de formulário tem uma saída clara."],
+]
+
+const cvcList = ["Novas experiências do site e do app", "UX de todos os produtos até o checkout", "Facelift de aéreo", "Sustentação de UX", "Atlas, o site das lojas físicas"]
+---
+
+<Base title="Anna Cabral · Product Designer" description="Portfólio de Anna Cabral, Product Designer UX/UI em Curitiba. Cases de Smiles, GOL, Grupo Ultra e CVC Viagens.">
+    <!-- hero -->
+    <section class="hero">
+        <p class="label">Product Designer · UX/UI · Curitiba, BR · remoto</p>
+        <HeroTitle client:load text="Design de produto|orientado por" words="dados., pessoas., negócio., pesquisa." fontSize={132} interval={2200} />
+        <div class="hero-foot">
+            <p class="body-l hero-lead">Redesenho jornadas de busca, checkout e conta em produtos B2C de grande escala, hoje na CVC Viagens. Pesquisa, dados e IA no processo; entrega no fim.</p>
+            <div class="hero-actions">
+                <PillButton client:visible label="Vamos conversar ↗" link={`mailto:${EMAIL}`} />
+                <span class="hide-phone"><RotatingBadge /></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- trabalho -->
+    <section class="work" id="cases">
+        <div class="row-between">
+            <div class="title-col"><RevealText client:visible text="Trabalho selecionado" highlight="selecionado" fontSize={96} /></div>
+            <p class="label">CVC + 4 cases · 2022 — 2026</p>
+        </div>
+
+        <div class="cvc dim">
+            <div class="cvc-text">
+                <p class="label">Sob NDA · apresento ao vivo</p>
+                <RevealText client:visible text="CVC Viagens: as novas experiências do site e do app B2C" highlight="do site e do app B2C" fontSize={64} />
+                <p class="body">Desde abril de 2024 na maior operadora de turismo do país. Desenho as novas experiências do site e do app B2C, com UX de todos os produtos, da busca ao checkout. Também faço a sustentação de UX desses produtos e atuo no Atlas, o site usado nas lojas físicas. Como é um trabalho sob NDA, mostro telas, decisões e resultados numa conversa.</p>
+                <PillButton client:visible primary label="Agendar uma apresentação ↗" link={`mailto:${EMAIL}?subject=${encodeURIComponent("Apresentação do case CVC")}`} />
+            </div>
+            <ul class="cvc-list">
+                {cvcList.map((t) => <li class="body">{t}</li>)}
+            </ul>
+        </div>
+
+        <div class="grid">
+            {cases.map((c) => <ScreenCard client:visible {...c} />)}
+        </div>
+    </section>
+
+    <!-- sobre -->
+    <section class="section dim" id="sobre">
+        <p class="label">Sobre</p>
+        <RevealText client:visible text="Design que resolve, com o negócio na mesa." highlight="com o negócio na mesa." fontSize={104} />
+        <div class="about">
+            <img class="photo" src="/img/1PNvVvO7W8a8BLb0U7GyowMjtJI.jpg" alt="Anna Cabral tomando café num café com plantas" width="420" height="525" loading="lazy" />
+            <div class="about-text">
+                <p class="body-l">Sou Anna, Product Designer em Curitiba. Antes do digital, empreendi no setor de eventos: operação, negociação e cliente na frente o tempo todo. É daí que vem o meu jeito de trabalhar: entender o negócio, resolver o problema e entregar.</p>
+                <p class="body">Desde 2022 desenho produtos digitais para marcas como GOL/Smiles, Grupo Ultra, McDonald's e CVC Viagens. Sou tecnóloga em Design de Produto pela Anhembi Morumbi e sigo estudando dados, negócio e IA aplicada a produto.</p>
+                <dl class="stats">
+                    <div><dt class="h2">4</dt><dd class="label">anos em product design</dd></div>
+                    <div><dt class="h2">2,5</dt><dd class="label">anos no B2C da CVC</dd></div>
+                    <div><dt class="h2">10+</dt><dd class="label">marcas atendidas</dd></div>
+                </dl>
+            </div>
+        </div>
+    </section>
+
+    <!-- processo -->
+    <section class="section" id="processo">
+        <div class="row-between">
+            <div class="title-col"><RevealText client:visible text="Como eu trabalho" highlight="trabalho" fontSize={96} /></div>
+            <p class="label">Ciclo completo de UX</p>
+        </div>
+        <ProcessAccordion client:visible items={process} panelHeight={460} />
+    </section>
+
+    <!-- marcas -->
+    <section class="brands dim" aria-labelledby="marcas">
+        <p class="label brands-label" id="marcas">Marcas com quem trabalhei</p>
+        <Marquee client:visible items={["GOL/Smiles", "Porto", "Livelo", "Grupo Ultra"]} speed={26} />
+        <Marquee client:visible items={["Estácio", "CVC Viagens", "VoeBiz", "Reino Studio"]} speed={22} reverse />
+    </section>
+
+    <!-- contato -->
+    <footer class="contact dark" slot="after">
+        <p class="label">Contato</p>
+        <RevealText client:visible text="Tem um produto complexo? Vamos simplificar juntos." highlight="Vamos simplificar juntos." fontSize={120} color="#FAFAF7" align="center" />
+        <div class="contact-actions">
+            <PillButton client:visible primary ink="#FAFAF7" label={`${EMAIL} ↗`} link={`mailto:${EMAIL}`} />
+            <PillButton client:visible ink="#FAFAF7" label="LinkedIn ↗" link="https://www.linkedin.com/in/annapaulacabral" newTab />
+        </div>
+        <div class="footer-bar">
+            <p class="label">© 2026 Anna Cabral</p>
+            <p class="label">Curitiba, BR</p>
+        </div>
+    </footer>
+</Base>
+
+<style>
+    .hero {
+        padding: 150px var(--gutter) 120px;
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+    }
+    .hero-foot {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: flex-end;
+        gap: 40px;
+        padding-top: 40px;
+    }
+    .hero-lead {
+        max-width: 560px;
+    }
+    .hero-actions {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+    }
+    .work {
+        padding: 40px var(--gutter) 140px;
+        display: flex;
+        flex-direction: column;
+        gap: 72px;
+    }
+    .cvc {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        padding: 56px;
+    }
+    .cvc-text {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 24px;
+        padding-right: 32px;
+    }
+    .cvc-list {
+        width: 380px;
+        flex: none;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        border-top: 1px solid var(--line);
+    }
+    .cvc-list li {
+        padding: 18px 0;
+        border-bottom: 1px solid var(--line);
+        color: var(--ink);
+    }
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(min(460px, 100%), 1fr));
+        gap: 96px 48px;
+        align-items: start;
+    }
+    .about {
+        width: 100%;
+        display: flex;
+        gap: 32px;
+        align-items: flex-start;
+    }
+    .photo {
+        width: 420px;
+        height: 525px;
+        flex: none;
+        object-fit: cover;
+        background: var(--line);
+    }
+    .about-text {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+    }
+    .stats {
+        margin: 0;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        border-top: 1px solid var(--line);
+    }
+    .stats > div {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding: 24px 24px 24px 0;
+    }
+    .stats dd {
+        margin: 0;
+    }
+    .brands {
+        padding: 120px 0;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+    .brands-label {
+        padding: 0 var(--gutter) 32px;
+    }
+    .contact {
+        padding: 180px var(--gutter) 48px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 56px;
+    }
+    .contact-actions {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 16px;
+        padding: 8px 0 120px;
+        max-width: 100%;
+    }
+
+    @media (max-width: 1199px) {
+        .hero {
+            padding: 120px var(--gutter) 96px;
+        }
+        .hero-lead {
+            max-width: 520px;
+        }
+        .work {
+            padding: 32px var(--gutter) 120px;
+            gap: 56px;
+        }
+        .cvc {
+            flex-direction: column;
+            gap: 40px;
+            padding: 40px;
+        }
+        .cvc-text {
+            padding: 0;
+            width: 100%;
+        }
+        .cvc-list {
+            width: 100%;
+        }
+        .grid {
+            grid-template-columns: 1fr 1fr;
+            gap: 72px 32px;
+        }
+        .about {
+            gap: 48px;
+        }
+        .photo {
+            width: 300px;
+            height: 375px;
+        }
+        .brands-label {
+            padding: 0 var(--gutter) 32px;
+        }
+        .contact {
+            padding: 140px var(--gutter) 40px;
+        }
+    }
+    @media (max-width: 809px) {
+        .hero {
+            padding: 80px var(--gutter) 64px;
+            gap: 24px;
+        }
+        .hero-foot {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 24px;
+            padding-top: 4px;
+        }
+        .hero-lead {
+            max-width: none;
+        }
+        .hide-phone {
+            display: none;
+        }
+        .work {
+            padding: 16px var(--gutter) 88px;
+            gap: 36px;
+        }
+        .cvc {
+            padding: 28px 20px;
+            gap: 28px;
+        }
+        .grid {
+            grid-template-columns: 1fr;
+            row-gap: 56px;
+        }
+        .about {
+            flex-direction: column;
+            gap: 36px;
+        }
+        .photo {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 4 / 5;
+        }
+        .stats > div {
+            padding: 20px 12px 0 0;
+        }
+        .brands {
+            padding: 72px 0;
+        }
+        .brands-label {
+            padding: 0 var(--gutter) 24px;
+        }
+        .contact {
+            padding: 104px var(--gutter) 32px;
+            gap: 36px;
+        }
+        .contact-actions {
+            flex-direction: column;
+            align-items: center;
+            padding: 0 0 64px;
+        }
+    }
+</style>

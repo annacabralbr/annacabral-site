@@ -1,0 +1,71 @@
+---
+// Selo circular com texto girando devagar e seta no centro; leva até os cases.
+// No hover a seta desce e o giro acelera. Parado com "reduzir movimento".
+interface Props {
+    text?: string
+    href?: string
+    size?: number
+}
+const { text = "Projetos selecionados • Projetos selecionados • ", href = "#cases", size = 140 } = Astro.props
+const r = 42
+---
+
+<a class="badge" href={href} aria-label={text.split("•")[0].trim()} style={`width:${size}px;height:${size}px`}>
+    <svg class="ring" viewBox="0 0 100 100" aria-hidden="true">
+        <defs>
+            <path id="badge-circle" d={`M 50,50 m -${r},0 a ${r},${r} 0 1,1 ${r * 2},0 a ${r},${r} 0 1,1 -${r * 2},0`}></path>
+        </defs>
+        <text fill="currentColor"><textPath href="#badge-circle">{text.toUpperCase()}</textPath></text>
+    </svg>
+    <span class="arrow" aria-hidden="true">
+        <svg width={size * 0.26} height={size * 0.26} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3v18M5 14l7 7 7-7"></path></svg>
+    </span>
+</a>
+
+<style>
+    .badge {
+        position: relative;
+        display: block;
+        flex: none;
+        color: var(--ink);
+    }
+    .ring {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        animation: spin 18s linear infinite;
+    }
+    .badge:hover .ring {
+        animation-duration: 8s;
+    }
+    .ring text {
+        font-family: var(--font);
+        font-size: 7.4px;
+        font-weight: 500;
+        letter-spacing: 0.22em;
+    }
+    .arrow {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+    }
+    .arrow svg {
+        transition: transform 0.35s cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+    .badge:hover .arrow svg {
+        transform: translateY(6px);
+    }
+    @keyframes spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .ring {
+            animation: none;
+        }
+    }
+</style>
