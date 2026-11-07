@@ -1,0 +1,314 @@
+---
+import Base from "../../layouts/Base.astro"
+import CaseHero from "../../components/CaseHero.astro"
+import NextCase from "../../components/NextCase.astro"
+import RevealText from "../../components/RevealText.astro"
+import ScreenFrame from "../../components/ScreenFrame"
+
+// Telas exportadas do Figma (página Case → Prints do app publicado) em public/img/fem/
+const tools = [
+    ["App da Smart Fit", "treino"],
+    ["App do relógio", "passos, sono, gasto"],
+    ["MyFitnessPal", "comida"],
+    ["Lembretes soltos", "adesivo, creatina, água"],
+]
+const hypotheses = [
+    ["H1", "Em todas as fases, e mais ainda a partir da perimenopausa, preservar músculo pesa mais do que comer menos. A proteína é a métrica principal; as calorias, a de apoio."],
+    ["H2", "A balança oscila com água, ciclo, hormônios e gestação. Medidas como a cintura, e a relação cintura ÷ altura, mostram o progresso com mais clareza."],
+    ["H3", "Registrar precisa levar segundos. Se der trabalho, a pessoa abandona."],
+    ["H4", "Cada mulher treina numa realidade diferente: academia, halteres ou casa, em 30 ou 60 minutos. Um treino que ignora isso é abandonado."],
+]
+const personas = [
+    ["Anna, 48", "Perimenopausa · vegetariana · academia", "Lembrar o adesivo no dia certo e bater a proteína sem carne."],
+    ["Bia, 31", "Gestante, 2º trimestre · treina em casa", "Comer o que a gestação pede, sem dieta, e treinar com a liberação do pré-natal."],
+    ["Carol, 26", "Ciclo irregular · halteres em casa", "Um treino que caiba em 30 minutos e atenção ao ferro."],
+    ["Luiza, 38", "Mulher trans · terapia hormonal", "Ser reconhecida como mulher e lembrar remédios sem expor dose."],
+]
+const process = [
+    ["01", "Uso real primeiro", "O projeto começou como um diário pessoal, usado no dia a dia para descobrir o que de fato era registrado e o que era ignorado."],
+    ["02", "Pesquisa sobre cada fase", "Levantamento do que muda em cada fase e do que o app não deve fazer: recomendar injetáveis sem receita, sugerir implantes hormonais manipulados, sugerir dose de hormônio ou calcular déficit na gestação."],
+    ["03", "Discovery", "Benchmarking de 7 apps (Flo, Clue, Balance, Caria, MyFitnessPal, Hevy e Smart Fit Coach), Matriz CSD e proto-personas para testar as decisões."],
+    ["04", "Do app de amigas ao Fem", "O valor estava na fase hormonal, não no fitness genérico. O nome, o público e o cadastro mudaram, e depois o recorte se abriu para todas as fases, com a idade filtrando as perguntas."],
+]
+const decisions = [
+    ["Fases filtradas pela idade", "O cadastro pede a idade antes da fase. Abaixo dos 40: ciclo, ciclo irregular, gestação, amamentação ou menopausa precoce. A partir dos 40 entram perimenopausa e menopausa. Perguntar sobre menopausa a uma mulher de 25 anos quebra a confiança na primeira tela.", "O app não acompanha ganho de peso na gestação; isso fica com o pré-natal, e a tela diz isso."],
+    ["Remédios com a frequência real", "Cada remédio tem forma, frequência (todo dia, 2x ao dia, dias da semana ou a cada X dias) e horário. O lembrete só funciona se souber o ritmo de cada um. Limite ético: o app nunca pede dose.", "Um passo a mais no cadastro, que pode ser pulado."],
+    ["Comida por porção, não por grama", "Busca por categorias na lista própria e nos 590 itens da tabela TACO. No que vem em unidade, fatia ou dose, ela escolhe o tamanho e a quantidade. Quase ninguém sabe quantos gramas tem uma fatia de pizza.", "Porções variam; os valores são médias aproximadas, e a interface diz isso."],
+    ["Proteína como métrica principal", "O card principal é o anel de proteína, e no Progresso a cintura vem antes do peso. Nessas fases, manter músculo sustenta o metabolismo, e a balança oscila com água e hormônio.", "Pede fita métrica e o hábito de medir a cada 1 ou 2 semanas."],
+    ["Guia do dia em grade", "A primeira versão era uma lista de 9 itens que dominava o Início. Virou barra de progresso, grade 3×3 e detalhe sob demanda, para ser lida em segundos, entre uma série e outra.", "O detalhe de cada item fica a um toque."],
+    ["Treinos para realidades diferentes", "O cadastro pergunta onde e com o que ela treina: academia, máquinas, halteres ou casa. O plano troca cada exercício pelo equivalente do mesmo movimento. Na gestação, a partir do 2º trimestre, exercícios de barriga para cima viram versões em pé, de lado ou em quatro apoios.", "15 pictogramas novos no mesmo estilo."],
+    ["O que falta vem primeiro", "Em uso real, a usuária encerrou o treino sem dois exercícios que estavam abaixo de muito texto. Agora os pendentes aparecem primeiro e, ao finalizar, uma bandeja avisa: “Faltam 2 exercícios”.", "As instruções gerais ficam num bloco recolhido no fim."],
+    ["Web app, sem lojas", "Um link no WhatsApp e instalação na tela inicial. Google Play e App Store foram avaliadas, mas para família e amigas o PWA entrega o mesmo valor sem custo nem revisão.", "No iPhone, as notificações só funcionam com o app instalado na Tela de Início; a tela explica o caminho."],
+]
+const screens = [
+    ["01.png", "Cadastro: idade antes da fase"],
+    ["03.png", "Início: avisos, remédios e proteína"],
+    ["04.png", "Guia do dia em grade"],
+    ["05.png", "Treino com cronômetro e descanso"],
+    ["08.png", "Pizza por fatia, com quantidade"],
+    ["11.png", "Progresso: cintura ÷ altura"],
+    ["13.png", "Cadastro de gestante, treino em casa"],
+    ["14.png", "Treino na gestação: aviso do pré-natal"],
+]
+---
+
+<Base back title="Fem · Anna Cabral" description="Fem, web app criado para mulheres em todas as fases: remédios e reposição, comida por porção com os nutrientes de cada fase e treinos para a realidade de cada uma.">
+    <CaseHero
+        label="Case 05 · Projeto pessoal · Fem"
+        title="Um app para mulheres em todas as fases."
+        highlight="em todas as fases."
+        lead="O Fem nasceu para a perimenopausa, a menopausa e a transição hormonal e depois passou a acolher mulheres em todas as fases: ciclo menstrual, gestação e amamentação. Reúne remédios e reposição sem dose, comida por porção com os nutrientes de cada fase, treinos para academia, halteres ou casa, lembretes e um guia diário. Produto feito de ponta a ponta pela designer, com a IA como parceira de pesquisa e de código."
+        facts={[
+            ["Papel", "Produto inteiro, de ponta a ponta"],
+            ["Período", "2026"],
+            ["Plataforma", "Web app instalável (PWA)"],
+            ["Stack", "Figma · Supabase · Web Push · Netlify"],
+        ]}
+    />
+
+    <section class="screens dim">
+        <div class="frame"><ScreenFrame client:visible src="/img/fem/03.png" alt="Tela Início do Fem com avisos, remédios do dia e anel de proteína" caption="Início" /></div>
+        <div class="frame"><ScreenFrame client:visible src="/img/fem/05.png" alt="Tela de treino com cronômetro e descanso entre séries" caption="Treino" /></div>
+        <div class="frame"><ScreenFrame client:visible src="/img/fem/10.png" alt="Tela de nutrientes do dia" caption="Nutrientes do dia" /></div>
+    </section>
+
+    <section class="section">
+        <p class="label">01 · Contexto</p>
+        <RevealText text="Quatro apps que não conversavam entre si." highlight="que não conversavam entre si." fontSize={72} />
+        <p class="body-l measure">O ponto de partida foi pessoal. Em 2026, a designer entrou na perimenopausa e passou a organizar uma reposição hormonal prescrita, os nutrientes que passaram a pesar mais e os treinos com quatro ferramentas separadas. Nenhuma falava de perimenopausa, reposição ou nutrientes na dieta vegetariana. Quando o app chegou às amigas, ficou claro que mulheres em outras fases têm a mesma rotina para organizar e nenhum produto pensado para elas.</p>
+        <dl class="cells cells-4">
+            {
+                tools.map(([t, b]) => (
+                    <div class="cell cell-fact">
+                        <dt class="h3">{t}</dt>
+                        <dd class="body">{b}</dd>
+                    </div>
+                ))
+            }
+        </dl>
+    </section>
+
+    <section class="section dim">
+        <p class="label">02 · Problema</p>
+        <h2 class="h2 measure">Como uma mulher, em qualquer fase da vida, acompanha num lugar só os remédios, os nutrientes e o treino que a sua fase pede, sem virar refém de contar calorias nem de converter comida em gramas?</h2>
+        <div class="cells cells-2">
+            {
+                hypotheses.map(([t, b]) => (
+                    <div class="cell">
+                        <span class="label">{t}</span>
+                        <p class="body">{b}</p>
+                    </div>
+                ))
+            }
+        </div>
+    </section>
+
+    <section class="section">
+        <p class="label">03 · Processo</p>
+        <RevealText text="Do diário pessoal ao app para todas as fases." highlight="ao app para todas as fases." fontSize={72} />
+        <ol class="cells cells-4 plain">
+            {
+                process.map(([n, t, b]) => (
+                    <li class="cell">
+                        <span class="label">{n}</span>
+                        <h3 class="h3">{t}</h3>
+                        <p class="body">{b}</p>
+                    </li>
+                ))
+            }
+        </ol>
+        <p class="body-l measure">Oportunidade encontrada no benchmarking: os apps de ciclo e menopausa cuidam de sintomas, e os de comida e treino ignoram a fase da vida. Nenhum dos 7 junta, de graça e em português, a fase de cada mulher, os remédios com a frequência real, a comida em porções brasileiras e um treino que cabe no tempo e no lugar dela.</p>
+    </section>
+
+    <section class="section after-section">
+        <p class="label">Proto-personas</p>
+        <div class="cells cells-4">
+            {
+                personas.map(([n, d, need]) => (
+                    <div class="cell">
+                        <h3 class="h3">{n}</h3>
+                        <p class="label">{d}</p>
+                        <p class="body">{need}</p>
+                    </div>
+                ))
+            }
+        </div>
+        <p class="body">Hipóteses construídas a partir do uso da designer e de conversas com amigas. Ainda serão validadas nos testes de usabilidade.</p>
+    </section>
+
+    <section class="section dim">
+        <p class="label">04 · Decisões e trade-offs</p>
+        <RevealText text="Cada fase muda as perguntas, as metas e o treino." highlight="as metas e o treino." fontSize={72} />
+        <div class="cells cells-2 decisions">
+            {
+                decisions.map(([t, b, trade]) => (
+                    <div class="cell cell-decision">
+                        <h3 class="h3">{t}</h3>
+                        <p class="body">{b}</p>
+                        <p class="body trade"><strong>Trade-off:</strong> {trade}</p>
+                    </div>
+                ))
+            }
+        </div>
+    </section>
+
+    <section class="section">
+        <p class="label">05 · Telas do app publicado</p>
+        <RevealText text="Duas jornadas: academia na perimenopausa e treino em casa na gestação." highlight="e treino em casa na gestação." fontSize={64} />
+        <div class="gallery">
+            {
+                screens.map(([f, c]) => (
+                    <div class="g-item">
+                        <ScreenFrame client:visible src={`/img/fem/${f}`} alt={c} caption={c} scroll={false} />
+                    </div>
+                ))
+            }
+        </div>
+        <p class="body">Capturas da versão publicada, com dados de exemplo.</p>
+    </section>
+
+    <section class="section dark">
+        <p class="label">06 · Design system e acessibilidade</p>
+        <h2 class="h2 measure">Tema escuro, um acento e cores semânticas só para dados.</h2>
+        <ul class="swatches" aria-label="Paleta">
+            {
+                [
+                    ["#0A0A0B", "Fundo"],
+                    ["#161618", "Superfície"],
+                    ["#D3F45B", "Acento"],
+                    ["#45D3C7", "Água"],
+                    ["#A99BFF", "Sono"],
+                    ["#FF6D4D", "Alerta"],
+                ].map(([hex, n]) => (
+                    <li>
+                        <span class="sw" style={`background:${hex}`} />
+                        <span class="body">{n}</span>
+                        <span class="label">{hex}</span>
+                    </li>
+                ))
+            }
+        </ul>
+        <div class="cells cells-2 on-dark">
+            <div class="cell">
+                <h3 class="h3">Contraste e toque</h3>
+                <p class="body">Todas as combinações de texto passam no WCAG 2.2 AA (de 6,5:1 a 16,3:1). Áreas de toque de no mínimo 44 px, rótulos sempre visíveis e animação desligada com “reduzir movimento”.</p>
+            </div>
+            <div class="cell">
+                <h3 class="h3">Tecnologia assistiva</h3>
+                <p class="body">Link para pular ao conteúdo, títulos em ordem, foco visível, nomes acessíveis nos botões, gráficos com descrição em texto e avisos falados para leitor de tela. Auditado com axe-core sem violações. Linguagem neutra e não capacitista: “mostrar” no lugar de “ver”.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section result">
+        <p class="label">07 · Resultado e aprendizados</p>
+        <h2 class="h2">No ar e em uso, com login, notificações e dados isolados por usuária.</h2>
+        <p class="body-l measure">Desenhar para uso próprio acelerou tudo, mas criou pontos cegos. O cadastro, o guia em lista e a data fixa do adesivo só foram corrigidos com o uso real. Abrir o produto para todas as mulheres mostrou que idade, fase, local de treino e porções são decisões de produto, não detalhes de interface.</p>
+        <div class="cells cells-3">
+            <div class="cell"><span class="label">Próximo passo</span><p class="body">Testes de usabilidade com as 4 proto-personas, usando as dúvidas da Matriz CSD como roteiro.</p></div>
+            <div class="cell"><span class="label">Próximo passo</span><p class="body">Revisão das regras de gestação e amamentação por nutricionista e profissional de educação física.</p></div>
+            <div class="cell"><span class="label">Próximo passo</span><p class="body">Medir o tempo de registro de uma refeição por porção versus por grama.</p></div>
+        </div>
+    </section>
+
+    <NextCase name="Uber Smiles" href="/cases/smiles" />
+</Base>
+
+<style>
+    .screens {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 64px;
+        padding: 120px var(--gutter);
+    }
+    .frame {
+        width: 280px;
+        max-width: 100%;
+    }
+    .after-section {
+        padding-top: 0;
+    }
+    .plain {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    .decisions .cell-decision:nth-last-child(-n + 2) {
+        border-bottom: 0;
+    }
+    .trade {
+        color: var(--muted);
+    }
+    .trade strong {
+        color: var(--ink);
+        font-weight: 600;
+    }
+    .gallery {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 48px 32px;
+    }
+    .swatches {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 24px;
+    }
+    .swatches li {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        width: 120px;
+    }
+    .sw {
+        width: 100%;
+        aspect-ratio: 1;
+        border-radius: 22px;
+        box-shadow: 0 0 0 1px rgba(250, 250, 247, 0.16);
+    }
+    .on-dark {
+        border-top-color: #3a3934;
+    }
+    .result {
+        gap: 32px;
+    }
+    @media (max-width: 1199px) {
+        .screens {
+            flex-wrap: wrap;
+            gap: 32px;
+            padding: 80px var(--gutter);
+        }
+        .frame {
+            width: 240px;
+        }
+        .gallery {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+    }
+    @media (max-width: 809px) {
+        .screens {
+            flex-direction: column;
+            align-items: center;
+            padding: 48px var(--gutter);
+            gap: 40px;
+        }
+        .frame {
+            width: 100%;
+            max-width: 280px;
+        }
+        .gallery {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 32px 16px;
+        }
+        .swatches li {
+            width: calc(33% - 16px);
+        }
+        .decisions .cell-decision:nth-last-child(2) {
+            border-bottom: 1px solid var(--line);
+        }
+    }
+</style>
