@@ -41,38 +41,54 @@ const decisions = [
     ["O que falta vem primeiro", "Em uso real, a usuária encerrou o treino sem dois exercícios que estavam abaixo de muito texto. Agora os pendentes aparecem primeiro e, ao finalizar, uma bandeja avisa: “Faltam 2 exercícios”.", "As instruções gerais ficam num bloco recolhido no fim."],
     ["Web app, sem lojas", "Um link no WhatsApp e instalação na tela inicial. Google Play e App Store foram avaliadas, mas para família e amigas o PWA entrega o mesmo valor sem custo nem revisão.", "No iPhone, as notificações só funcionam com o app instalado na Tela de Início; a tela explica o caminho."],
 ]
-const journeys = [
+// Protótipo: cada tela diz qual gesto leva à próxima (toque em x/y %, ou deslizar)
+const T = (x: number, y: number) => ({ type: "tap" as const, x, y })
+const LEFT = { type: "swipe-left" as const }
+const UP = { type: "swipe-up" as const }
+const END = { type: "none" as const }
+type G = ReturnType<typeof T> | typeof LEFT | typeof UP | typeof END
+const flowData: { label: string; intro: string; steps: [string, string, string, G][] }[] = [
     {
-        title: "Anna, 48 · perimenopausa · academia",
-        screens: [
-            ["intro-1.png", "Apresentação: para quem é"],
-            ["intro-2.png", "Apresentação: remédios"],
-            ["intro-3.png", "Apresentação: comida"],
-            ["intro-4.png", "Apresentação: treino"],
-            ["01.png", "Cadastro: idade antes da fase"],
-            ["02.png", "Remédios com frequência real"],
-            ["03.png", "Início: avisos, remédios e proteína"],
-            ["04.png", "Guia do dia em grade"],
-            ["05.png", "Treino com cronômetro e descanso"],
-            ["06.png", "Exercício aberto: séries e carga"],
-            ["07.png", "Treino de hoje encerrado"],
-            ["08.png", "Pizza por fatia, com quantidade"],
-            ["09.png", "Pão de queijo recheado por tamanho"],
-            ["10.png", "Nutrientes do dia"],
-            ["11.png", "Progresso: cintura ÷ altura"],
-            ["12.png", "Plano: onde você treina"],
+        label: "Apresentação",
+        intro: "Primeira visita, antes do cadastro",
+        steps: [
+            ["intro-1.png", "Para quem é", "Quem chega por um link no WhatsApp não sabe o que o app faz. A primeira tela já diz: feito para você, em qualquer fase.", LEFT],
+            ["intro-2.png", "Remédios", "Adesivo, comprimido ou injeção: o Fem avisa na hora certa, até com a tela bloqueada.", LEFT],
+            ["intro-3.png", "Comida", "Toque na porção, tipo uma fatia de pizza, e o Fem faz as contas. Ninguém precisa saber gramas.", LEFT],
+            ["intro-4.png", "Treino", "Academia, halteres ou casa, no tempo que cada uma tem. Pular aparece em todas as telas.", T(64, 95)],
         ],
     },
     {
-        title: "Bia, 31 · gestante · treino em casa",
-        screens: [
-            ["13.png", "Cadastro de gestante, treino em casa"],
-            ["14.png", "Treino na gestação: aviso do pré-natal"],
-            ["15.png", "Exercícios para casa"],
-            ["16.png", "Guia da gestação"],
+        label: "Anna · perimenopausa",
+        intro: "48 anos, vegetariana, treina na academia",
+        steps: [
+            ["01.png", "Idade antes da fase", "As fases oferecidas dependem da idade. Perimenopausa e menopausa só aparecem a partir dos 40.", UP],
+            ["02.png", "Remédios com frequência real", "Cada remédio tem forma, frequência e horário. O lembrete precisa saber o ritmo de cada um. O app nunca pede dose.", T(60, 60)],
+            ["03.png", "Início: o que falta hoje", "Avisos no topo, com ação direta: o suplemento não marcado e o adesivo do dia.", UP],
+            ["04.png", "Proteína como métrica principal", "O anel de proteína vem primeiro. Calorias, água e o guia da fase ficam logo abaixo, para ler entre uma série e outra.", T(37, 95)],
+            ["05.png", "Treino que cabe no tempo", "O plano mostra o que cabe nos minutos que ela tem e o que foi ajustado. O cronômetro de descanso fica fixo embaixo.", UP],
+            ["06.png", "Séries na mesma linha", "Pictograma, dicas e séries lado a lado, com alvos de 44 px. Na academia, a maioria só quer marcar e seguir.", T(84, 75)],
+            ["07.png", "Treino de hoje encerrado", "Ao encerrar, a tela vira um resumo. Só atividades extras, como bike ou corrida, entram depois.", T(62, 95)],
+            ["08.png", "Pizza por fatia", "Ela escolhe o tamanho da fatia e a quantidade. O grama continua disponível para quem pesa.", UP],
+            ["09.png", "Pão de queijo por tamanho", "Pequeno, médio ou grande. Os valores são médias aproximadas, e a própria interface diz isso.", T(50, 66)],
+            ["10.png", "Nutrientes do dia", "B12, cálcio, ferro, fibras e vitamina C somados no dia, com as metas da fase e da idade.", T(87, 95)],
+            ["11.png", "Cintura antes do peso", "No Progresso, a relação cintura ÷ altura vem antes da balança, que oscila com água e hormônio.", T(88, 6)],
+            ["12.png", "Plano de 6 meses", "Onde e com o que ela treina define os exercícios. O plano mantém as fases e troca cada exercício pelo equivalente.", END],
         ],
     },
-].map((j) => ({ title: j.title, screens: j.screens.map(([f, caption]) => ({ src: `/img/fem/${f}`, caption })) }))---
+    {
+        label: "Bia · gestação",
+        intro: "31 anos, 2º trimestre, treina em casa",
+        steps: [
+            ["13.png", "Cadastro de gestante", "Gestante informa o trimestre. Sem déficit de calorias: o extra muda a cada trimestre.", UP],
+            ["14.png", "Aviso do pré-natal", "O treino abre lembrando que ela só treina com a liberação da equipe de pré-natal.", UP],
+            ["15.png", "Exercícios para casa", "A partir do 2º trimestre, exercícios de barriga para cima viram versões em pé, de lado ou em quatro apoios.", T(12, 95)],
+            ["16.png", "Guia da gestação", "O guia do dia muda com a fase: proteína, ferro, B12 e as dicas do pré-natal.", END],
+        ],
+    },
+]
+const flows = flowData.map((f) => ({ label: f.label, intro: f.intro, steps: f.steps.map(([file, title, note, next]) => ({ src: `/img/fem/${file}`, title, note, next })) }))
+---
 
 <Base back title="Fem · Anna Cabral" description="Fem, web app criado para mulheres em todas as fases: remédios e reposição, comida por porção com os nutrientes de cada fase e treinos para a realidade de cada uma.">
     <CaseHero
@@ -174,14 +190,14 @@ const journeys = [
         </div>
     </section>
 
-    <section class="section">
-        <p class="label">05 · Telas do app publicado</p>
-        <RevealText text="Duas jornadas: academia na perimenopausa e treino em casa na gestação." highlight="e treino em casa na gestação." fontSize={64} />
-        <ScreenNavigator client:load journeys={journeys} />
-        <p class="body">Capturas da versão publicada, com dados de exemplo. Use as setas, a lista ou arraste a tela.</p>
+    <section class="section dark proto">
+        <p class="label">05 · Protótipo · toque na tela ou navegue pelas etapas</p>
+        <RevealText text="O app em uso, nas duas jornadas." highlight="nas duas jornadas." fontSize={72} color="#FAFAF7" />
+        <ScreenNavigator client:load flows={flows} />
+        <p class="body">Capturas da versão publicada, com dados de exemplo. Toque ou arraste a tela para navegar.</p>
     </section>
 
-    <section class="section dark">
+    <section class="section dim">
         <p class="label">06 · Design system e acessibilidade</p>
         <h2 class="h2 measure">Tema escuro, um acento e cores semânticas só para dados.</h2>
         <ul class="swatches" aria-label="Paleta">
@@ -202,7 +218,7 @@ const journeys = [
                 ))
             }
         </ul>
-        <div class="cells cells-2 on-dark">
+        <div class="cells cells-2">
             <div class="cell">
                 <h3 class="h3">Contraste e toque</h3>
                 <p class="body">Todas as combinações de texto passam no WCAG 2.2 AA (de 6,5:1 a 16,3:1). Áreas de toque de no mínimo 44 px, rótulos sempre visíveis e animação desligada com “reduzir movimento”.</p>
@@ -282,10 +298,11 @@ const journeys = [
         width: 100%;
         aspect-ratio: 1;
         border-radius: 22px;
-        box-shadow: 0 0 0 1px rgba(250, 250, 247, 0.16);
+        box-shadow: 0 0 0 1px rgba(21, 20, 15, 0.12);
     }
-    .on-dark {
-        border-top-color: #3a3934;
+    .proto {
+        padding-block: 120px;
+        gap: 48px;
     }
     .result {
         gap: 32px;

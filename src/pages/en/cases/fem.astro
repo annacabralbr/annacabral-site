@@ -41,38 +41,54 @@ const decisions = [
     ["What is left comes first", "In real use, the user finished a workout without two exercises that sat below a lot of text. Now pending exercises come first and, when finishing, a sheet warns: “2 exercises left”.", "General instructions sit in a collapsed block at the end."],
     ["Web app, no app stores", "A link on WhatsApp and installation on the home screen. Google Play and the App Store were considered, but for family and friends the PWA delivers the same value with no cost or review.", "On iPhone, notifications only work with the app added to the Home Screen; the screen explains how."],
 ]
-const journeys = [
+// Prototype: each screen says which gesture leads to the next one
+const T = (x: number, y: number) => ({ type: "tap" as const, x, y })
+const LEFT = { type: "swipe-left" as const }
+const UP = { type: "swipe-up" as const }
+const END = { type: "none" as const }
+type G = ReturnType<typeof T> | typeof LEFT | typeof UP | typeof END
+const flowData: { label: string; intro: string; steps: [string, string, string, G][] }[] = [
     {
-        title: "Anna, 48 · perimenopause · gym",
-        screens: [
-            ["intro-1.png", "Intro: who it is for"],
-            ["intro-2.png", "Intro: medication"],
-            ["intro-3.png", "Intro: food"],
-            ["intro-4.png", "Intro: workouts"],
-            ["01.png", "Sign-up: age before stage"],
-            ["02.png", "Medication on its real schedule"],
-            ["03.png", "Home: alerts, medication and protein"],
-            ["04.png", "Daily guide as a grid"],
-            ["05.png", "Workout with timer and rest"],
-            ["06.png", "Open exercise: sets and load"],
-            ["07.png", "Today's workout finished"],
-            ["08.png", "Pizza by slice, with quantity"],
-            ["09.png", "Filled cheese bread by size"],
-            ["10.png", "Today's nutrients"],
-            ["11.png", "Progress: waist ÷ height"],
-            ["12.png", "Plan: where you train"],
+        label: "Intro",
+        intro: "First visit, before sign-up",
+        steps: [
+            ["intro-1.png", "Who it is for", "People arriving from a WhatsApp link don't know what the app does. The first screen says it: made for you, in any stage.", LEFT],
+            ["intro-2.png", "Medication", "Patch, pill or injection: Fem reminds you at the right time, even with the screen locked.", LEFT],
+            ["intro-3.png", "Food", "Tap the portion, like a slice of pizza, and Fem does the math. Nobody needs to know grams.", LEFT],
+            ["intro-4.png", "Workouts", "Gym, dumbbells or home, in the time each woman has. Skip is available on every screen.", T(64, 95)],
         ],
     },
     {
-        title: "Bia, 31 · pregnant · home workouts",
-        screens: [
-            ["13.png", "Pregnancy sign-up, home workout"],
-            ["14.png", "Pregnancy workout: prenatal notice"],
-            ["15.png", "Home exercises"],
-            ["16.png", "Pregnancy guide"],
+        label: "Anna · perimenopause",
+        intro: "48, vegetarian, trains at the gym",
+        steps: [
+            ["01.png", "Age before stage", "The stages offered depend on age. Perimenopause and menopause only appear from 40 on.", UP],
+            ["02.png", "Medication on its real schedule", "Each medication has a form, frequency and time. The reminder needs to know each one's rhythm. The app never asks for doses.", T(60, 60)],
+            ["03.png", "Home: what is left today", "Alerts at the top, with a direct action: the unchecked supplement and today's patch.", UP],
+            ["04.png", "Protein as the main metric", "The protein ring comes first. Calories, water and the stage guide sit right below, readable between sets.", T(37, 95)],
+            ["05.png", "A workout that fits the time", "The plan shows what fits in the minutes she has and what was adjusted. The rest timer stays fixed at the bottom.", UP],
+            ["06.png", "Sets on one line", "Pictogram, tips and sets side by side, with 44 px targets. At the gym, most people just want to check and move on.", T(84, 75)],
+            ["07.png", "Today's workout finished", "When finished, the screen becomes a summary. Only extra activities, like cycling or running, can be added after.", T(62, 95)],
+            ["08.png", "Pizza by the slice", "She picks the slice size and quantity. Grams are still available for those who weigh food.", UP],
+            ["09.png", "Cheese bread by size", "Small, medium or large. Values are approximate averages, and the interface says so.", T(50, 66)],
+            ["10.png", "Today's nutrients", "B12, calcium, iron, fiber and vitamin C added up for the day, with goals for her stage and age.", T(87, 95)],
+            ["11.png", "Waist before weight", "In Progress, the waist-to-height ratio comes before the scale, which shifts with water and hormones.", T(88, 6)],
+            ["12.png", "6-month plan", "Where and with what she trains defines the exercises. The plan keeps the phases and swaps each exercise for its equivalent.", END],
         ],
     },
-].map((j) => ({ title: j.title, screens: j.screens.map(([f, caption]) => ({ src: `/img/fem/${f}`, caption })) }))---
+    {
+        label: "Bia · pregnancy",
+        intro: "31, 2nd trimester, trains at home",
+        steps: [
+            ["13.png", "Pregnancy sign-up", "Pregnant users enter their trimester. No calorie deficit: the extra changes each trimester.", UP],
+            ["14.png", "Prenatal notice", "The workout opens with a reminder that she only trains with her prenatal team's approval.", UP],
+            ["15.png", "Home exercises", "From the 2nd trimester, exercises lying on the back become standing, side-lying or all-fours versions.", T(12, 95)],
+            ["16.png", "Pregnancy guide", "The daily guide changes with the stage: protein, iron, B12 and prenatal tips.", END],
+        ],
+    },
+]
+const flows = flowData.map((f) => ({ label: f.label, intro: f.intro, steps: f.steps.map(([file, title, note, next]) => ({ src: `/img/fem/${file}`, title, note, next })) }))
+---
 
 <Base back lang="en" title="Fem · Anna Cabral" description="Fem, a web app created for women in every life stage: medication and hormone therapy, food by portion with each stage's nutrients, and workouts for each woman's reality.">
     <CaseHero
@@ -174,14 +190,14 @@ const journeys = [
         </div>
     </section>
 
-    <section class="section">
-        <p class="label">05 · Screens from the live app</p>
-        <RevealText text="Two journeys: the gym in perimenopause and home workouts in pregnancy." highlight="and home workouts in pregnancy." fontSize={64} />
-        <ScreenNavigator client:load journeys={journeys} prevLabel="Previous screen" nextLabel="Next screen" ofLabel="of" />
-        <p class="body">Screenshots of the live version, with sample data. The app is in Portuguese. Use the arrows, the list or swipe the screen.</p>
+    <section class="section dark proto">
+        <p class="label">05 · Prototype · tap the screen or move through the steps (app in Portuguese)</p>
+        <RevealText text="The app in use, in both journeys." highlight="in both journeys." fontSize={72} color="#FAFAF7" />
+        <ScreenNavigator client:load flows={flows} labels={{ back: "← Back", next: "Next →", pause: "Pause", play: "Play", flows: "Journeys", steps: "Journey steps", step: "Step", tapHint: "Tap to continue" }} />
+        <p class="body">Screenshots of the live version, with sample data. Tap or swipe the screen to navigate.</p>
     </section>
 
-    <section class="section dark">
+    <section class="section dim">
         <p class="label">06 · Design system and accessibility</p>
         <h2 class="h2 measure">Dark theme, one accent and semantic colors only for data.</h2>
         <ul class="swatches" aria-label="Palette">
@@ -202,7 +218,7 @@ const journeys = [
                 ))
             }
         </ul>
-        <div class="cells cells-2 on-dark">
+        <div class="cells cells-2">
             <div class="cell">
                 <h3 class="h3">Contrast and touch</h3>
                 <p class="body">Every text combination passes WCAG 2.2 AA (from 6.5:1 to 16.3:1). Touch targets of at least 44 px, labels always visible and animation turned off with “reduce motion”.</p>
@@ -282,10 +298,11 @@ const journeys = [
         width: 100%;
         aspect-ratio: 1;
         border-radius: 22px;
-        box-shadow: 0 0 0 1px rgba(250, 250, 247, 0.16);
+        box-shadow: 0 0 0 1px rgba(21, 20, 15, 0.12);
     }
-    .on-dark {
-        border-top-color: #3a3934;
+    .proto {
+        padding-block: 120px;
+        gap: 48px;
     }
     .result {
         gap: 32px;
