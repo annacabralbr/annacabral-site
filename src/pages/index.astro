@@ -13,6 +13,17 @@ const EMAIL = "annapaulacabralbr@gmail.com"
 const cases = [
     {
         index: "01",
+        client: "Projeto pessoal · Fem · web app",
+        title: "Um app para mulheres em todas as fases",
+        meta: "2026 · produto de ponta a ponta · no ar",
+        tags: "Discovery · Produto · UI · Acessibilidade",
+        src: "/img/fem/03.png",
+        device: "mobile",
+        link: "/cases/fem",
+        speed: 44,
+    },
+    {
+        index: "02",
         client: "Smiles · GOL · app",
         title: "Créditos de Uber pagos com milhas",
         meta: "Out 2022 · Rethink · lançado em 2023",
@@ -23,7 +34,7 @@ const cases = [
         speed: 52,
     },
     {
-        index: "02",
+        index: "03",
         client: "Smiles · GOL · site",
         title: "Nova identidade da home de Carros Smiles",
         meta: "Abr 2023 · Rethink · no ar",
@@ -34,7 +45,7 @@ const cases = [
         speed: 89,
     },
     {
-        index: "03",
+        index: "04",
         client: "GOL · VoeBiz",
         title: "O programa corporativo da GOL com a identidade da Smiles",
         meta: "Jun–Dez 2022 · Rethink",
@@ -45,7 +56,7 @@ const cases = [
         speed: 74,
     },
     {
-        index: "04",
+        index: "05",
         client: "Grupo Ultra · Abastece Aí (hoje KM de Vantagens)",
         title: "Uma nova home para alcançar quem não usava o app",
         meta: "Jan–Mar 2023 · Rethink · estrutura segue no KM de Vantagens",
@@ -53,17 +64,6 @@ const cases = [
         src: "/img/phH1D5Ky9R121ueamIHOlkhPBQ.png",
         device: "mobile",
         link: "/cases/abastece-ai",
-        speed: 44,
-    },
-    {
-        index: "05",
-        client: "Projeto pessoal · Fem · web app",
-        title: "Um app para mulheres em todas as fases",
-        meta: "2026 · produto de ponta a ponta · no ar",
-        tags: "Discovery · Produto · UI · Acessibilidade",
-        src: "/img/fem/03.png",
-        device: "mobile",
-        link: "/cases/fem",
         speed: 44,
     },
 ] as const
@@ -78,13 +78,13 @@ const process: [string, string][] = [
 const cvcList = ["Novas experiências do site e do app", "UX de todos os produtos até o checkout", "Facelift de aéreo", "Sustentação de UX", "Atlas, o site das lojas físicas"]
 ---
 
-<Base title="Anna Cabral · Product Designer" description="Portfólio de Anna Cabral, Product Designer UX/UI em Curitiba. Cases de Smiles, GOL, Grupo Ultra e CVC Viagens.">
+<Base title="Anna Cabral · Senior Product Designer" description="Portfólio de Anna Cabral, Senior Product Designer UX/UI em Curitiba. Cases de Smiles, GOL, Grupo Ultra e CVC Viagens.">
     <!-- hero -->
     <section class="hero">
-        <p class="label">Product Designer · UX/UI · Curitiba, BR · remoto</p>
+        <p class="label">UX/UI · Curitiba, BR · remoto</p>
         <HeroTitle client:load text="Design de produto|orientado por" words="dados., pessoas., negócio., pesquisa." fontSize={132} interval={2200} />
         <div class="hero-foot">
-            <p class="body-l hero-lead">Redesenho jornadas de busca, checkout e conta em produtos B2C de grande escala, hoje na CVC Viagens. Pesquisa, dados e IA no processo; entrega no fim.</p>
+            <p class="body-l hero-lead">Senior Product Designer na CVC Viagens. Cuido da experiência do site e do app B2C, da busca ao checkout.</p>
             <div class="hero-actions">
                 <PillButton client:visible label="Vamos conversar ↗" link={`mailto:${EMAIL}`} />
                 <span class="hide-phone"><RotatingBadge /></span>
@@ -126,7 +126,7 @@ const cvcList = ["Novas experiências do site e do app", "UX de todos os produto
                 <p class="body-l">Sou Anna, Product Designer em Curitiba. Antes do digital, empreendi no setor de eventos: operação, negociação e cliente na frente o tempo todo. É daí que vem o meu jeito de trabalhar: entender o negócio, resolver o problema e entregar.</p>
                 <p class="body">Desde 2022 desenho produtos digitais para marcas como GOL/Smiles, Grupo Ultra, McDonald's e CVC Viagens. Sou tecnóloga em Design de Produto pela Anhembi Morumbi e sigo estudando dados, negócio e IA aplicada a produto.</p>
                 <dl class="stats">
-                    <div><dt class="h2">4</dt><dd class="label">anos em product design</dd></div>
+                    <div><dt class="h2">5+</dt><dd class="label">anos em product design</dd></div>
                     <div><dt class="h2">2,5</dt><dd class="label">anos no B2C da CVC</dd></div>
                     <div><dt class="h2">10+</dt><dd class="label">marcas atendidas</dd></div>
                 </dl>
