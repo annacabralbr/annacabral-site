@@ -19,3 +19,7 @@ npm run dev
 ## Publicação
 
 Cada commit na branch `main` publica automaticamente na Vercel.
+
+## Versão em inglês
+
+As páginas em `src/pages/en/` são geradas a partir das páginas em português. Depois de mudar um texto em PT, atualize a tradução correspondente em `scripts/make-en.py` e rode `python3 scripts/make-en.py`. O script avisa se algum trecho ficou sem tradução.

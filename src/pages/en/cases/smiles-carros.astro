@@ -1,0 +1,160 @@
+---
+import Base from "../../../layouts/Base.astro"
+import CaseHero from "../../../components/CaseHero.astro"
+import NextCase from "../../../components/NextCase.astro"
+import RevealText from "../../../components/RevealText.astro"
+import ScreenFrame from "../../../components/ScreenFrame"
+import PillButton from "../../../components/PillButton"
+
+const challenge = [
+    ["Misaligned identity", "The home page had already been updated, but the car rental page still had the old look. Moving between the two felt like visiting different websites."],
+    ["Design system as the base", "Bring headings, cards, icons and carousels into the design system components, instead of creating a parallel pattern just for cars."],
+    ["Tight deadline", "With little time, the priority was what standardizes the experience. Anything that depended on marketing or UX writing was flagged in the layout itself, such as the idea of replacing the carousels with a showcase."],
+]
+const decisions = [
+    ["Existing patterns", "Headings with icons and cards following the Hotels pattern, and the carousel matching the co-branding landing page. People coming from the home page recognized it right away."],
+    ["Honest affordance", "Informational Localiza cards and icons are not clickable and do not look like buttons. Only car groups and destinations lead to another page."],
+    ["Contrast on images", "On the destination photos, the radial gradient was reduced to 10%, improving contrast and the legibility of titles over the image."],
+    ["A DS exception, with approval", "The Clube Smiles card broke from the design system pattern. Before moving on, the proposal was presented to the design lead for approval."],
+]
+const variations = [
+    { src: "/img/W5qApxSl5GCGGphb4xiHSxK6GU.png", alt: "Page variation with a car groups carousel", caption: "Variation · car groups", speed: 140 },
+    { src: "/img/Vv6jGgRMSvSPH8kxYqUnWJBuc.png", alt: "Page variation with rental companies and international destinations", caption: "Variation · international destinations", speed: 160 },
+]
+---
+
+<Base back lang="en" title="Carros Smiles · Anna Cabral" description="Facelift of the car rental page on the Smiles website, using the design system and identity of the rest of the site.">
+    <CaseHero
+        label="Case 03 · Smiles · GOL"
+        title="A new look for the Smiles car rental page."
+        highlight="car rental page."
+        lead="Facelift of the car rental page on the website of Smiles, the GOL airline loyalty program. The page was outdated compared to the rest of the site. The challenge was to bring it into the design system and make it consistent with the home page experience, which had already been updated."
+        facts={[
+            ["Role", "Product Designer · Rethink"],
+            ["Period", "Apr 2023 · tight deadline"],
+            ["Scope", "Facelift, UI, variations and specs"],
+            ["Status", "Live on the Smiles website"],
+        ]}
+    />
+
+    <section class="screen-wide dim">
+        <div class="wide">
+            <ScreenFrame
+                client:visible
+                device="desktop"
+                src="/img/CSGCHDnTu5P85phq84KixpaKKQ.png"
+                alt="New car rental page on the Smiles website, with search, Localiza information, car groups and destinations"
+                caption="Car rental page · full scroll"
+                speed={260}
+            />
+        </div>
+    </section>
+
+    <section class="section">
+        <p class="label">01 · The challenge</p>
+        <RevealText text="An outdated page on a site that had already changed." highlight="on a site that had already changed." fontSize={72} />
+        <div class="cells cells-3">
+            {
+                challenge.map(([t, b]) => (
+                    <div class="cell">
+                        <h3 class="h3">{t}</h3>
+                        <p class="body">{b}</p>
+                    </div>
+                ))
+            }
+        </div>
+    </section>
+
+    <section class="variations dim">
+        {
+            variations.map((v) => (
+                <div class="frame">
+                    <ScreenFrame client:visible device="desktop" blur={14} blurLabel="Details under NDA · shown in a call" {...v} />
+                </div>
+            ))
+        }
+    </section>
+
+    <section class="section">
+        <p class="label">02 · Design decisions</p>
+        <RevealText text="Reuse before inventing." highlight="before inventing." fontSize={72} />
+        <div class="cells cells-2 decisions">
+            {
+                decisions.map(([t, b]) => (
+                    <div class="cell cell-decision">
+                        <h3 class="h3">{t}</h3>
+                        <p class="body">{b}</p>
+                    </div>
+                ))
+            }
+        </div>
+    </section>
+
+    <section class="section dim result">
+        <p class="label">03 · Outcome</p>
+        <h2 class="h2">The structure I designed is still live.</h2>
+        <p class="body-l measure">After handoff, the Smiles team made adjustments, such as adding Movida next to Localiza and revising copy. The backbone of the proposal remained: search and benefits at the top, the national partner block, the Brazil carousel, the Rentcars block with the same three highlights, international destinations, the Clube Smiles and GOL card blocks and the FAQ at the end.</p>
+        <PillButton client:visible label="Open the live page ↗" link="https://www.smiles.com.br/mfe/carros" newTab />
+    </section>
+
+    <NextCase name="VoeBiz" href="/en/cases/voebiz" lang="en" />
+</Base>
+
+<style>
+    .screen-wide {
+        display: flex;
+        justify-content: center;
+        padding: 120px var(--gutter);
+    }
+    .wide {
+        width: 1100px;
+        max-width: 100%;
+    }
+    .variations {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 48px;
+        padding: 120px var(--gutter);
+    }
+    .frame {
+        width: 620px;
+        max-width: 100%;
+        min-width: 0;
+    }
+    .result {
+        gap: 32px;
+    }
+    .decisions .cell-decision:nth-last-child(-n + 2) {
+        border-bottom: 0;
+    }
+    @media (max-width: 1199px) {
+        .screen-wide {
+            padding: 80px var(--gutter);
+        }
+        .variations {
+            padding: 80px var(--gutter);
+            gap: 24px;
+        }
+        .frame {
+            flex: 1 1 0;
+        }
+    }
+    @media (max-width: 809px) {
+        .screen-wide {
+            padding: 48px var(--gutter);
+        }
+        .variations {
+            flex-direction: column;
+            padding: 48px var(--gutter);
+            gap: 32px;
+        }
+        .frame {
+            width: 100%;
+            flex: none;
+        }
+        .decisions .cell-decision:nth-last-child(2) {
+            border-bottom: 1px solid var(--line);
+        }
+    }
+</style>

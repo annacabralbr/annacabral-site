@@ -1,0 +1,314 @@
+---
+import Base from "../../../layouts/Base.astro"
+import CaseHero from "../../../components/CaseHero.astro"
+import NextCase from "../../../components/NextCase.astro"
+import RevealText from "../../../components/RevealText.astro"
+import ScreenFrame from "../../../components/ScreenFrame"
+
+// Screens exported from Figma, in public/img/fem/
+const tools = [
+    ["Smart Fit app", "workouts"],
+    ["Smartwatch app", "steps, sleep, calories burned"],
+    ["MyFitnessPal", "food"],
+    ["Loose reminders", "patch, creatine, water"],
+]
+const hypotheses = [
+    ["H1", "In every stage, and even more from perimenopause on, preserving muscle matters more than eating less. Protein is the main metric; calories are secondary."],
+    ["H2", "Body weight shifts with water, cycle, hormones and pregnancy. Measurements like the waist, and the waist-to-height ratio, show progress more clearly."],
+    ["H3", "Logging has to take seconds. If it takes effort, people give up."],
+    ["H4", "Every woman trains in a different reality: gym, dumbbells or at home, in 30 or 60 minutes. A workout that ignores this gets abandoned."],
+]
+const personas = [
+    ["Anna, 48", "Perimenopause · vegetarian · gym", "Remember the patch on the right day and hit her protein goal without meat."],
+    ["Bia, 31", "Pregnant, 2nd trimester · trains at home", "Eat what pregnancy calls for, without dieting, and train with her prenatal doctor's approval."],
+    ["Carol, 26", "Irregular cycle · dumbbells at home", "A workout that fits in 30 minutes, and attention to iron."],
+    ["Luiza, 38", "Trans woman · hormone therapy", "Be recognized as a woman and remember medication without disclosing doses."],
+]
+const process = [
+    ["01", "Real use first", "The project started as a personal log, used every day to find out what was actually logged and what was ignored."],
+    ["02", "Research on each stage", "A survey of what changes in each stage and of what the app must not do: recommend injectables without a prescription, suggest compounded hormone implants, suggest hormone doses or calculate a calorie deficit during pregnancy."],
+    ["03", "Discovery", "Benchmarking of 7 apps (Flo, Clue, Balance, Caria, MyFitnessPal, Hevy and Smart Fit Coach), a CSD matrix and proto-personas to test decisions."],
+    ["04", "From an app for friends to Fem", "The value was in the hormonal stage, not in generic fitness. The name, the audience and the sign-up changed, and then the scope opened up to every stage, with age filtering the questions."],
+]
+const decisions = [
+    ["Stages filtered by age", "Sign-up asks for age before the stage. Under 40: cycle, irregular cycle, pregnancy, breastfeeding or early menopause. From 40 on, perimenopause and menopause are added. Asking a 25-year-old about menopause breaks trust on the first screen.", "The app does not track pregnancy weight gain; that stays with prenatal care, and the screen says so."],
+    ["Medication on its real schedule", "Each medication has a form, a frequency (daily, twice a day, specific weekdays or every X days) and a time. A reminder only works if it knows each one's rhythm. Ethical limit: the app never asks for doses.", "One more sign-up step, which can be skipped."],
+    ["Food by portion, not by gram", "Search by category in the app's own list and the 590 items of the TACO table (Brazil's food composition table). For food that comes in units, slices or servings, she picks the size and quantity. Almost nobody knows how many grams a slice of pizza weighs.", "Portions vary; values are approximate averages, and the interface says so."],
+    ["Protein as the main metric", "The main card is the protein ring, and in Progress the waist comes before weight. In these stages, keeping muscle supports metabolism, and the scale shifts with water and hormones.", "It requires a tape measure and the habit of measuring every 1 or 2 weeks."],
+    ["Daily guide as a grid", "The first version was a 9-item list that took over the Home screen. It became a progress bar, a 3×3 grid and details on demand, so it can be read in seconds between sets.", "Each item's details are one tap away."],
+    ["Workouts for different realities", "Sign-up asks where and with what she trains: gym, machines, dumbbells or at home. The plan swaps each exercise for an equivalent of the same movement. During pregnancy, from the 2nd trimester, exercises lying on the back become standing, side-lying or all-fours versions.", "15 new pictograms in the same style."],
+    ["What is left comes first", "In real use, the user finished a workout without two exercises that sat below a lot of text. Now pending exercises come first and, when finishing, a sheet warns: “2 exercises left”.", "General instructions sit in a collapsed block at the end."],
+    ["Web app, no app stores", "A link on WhatsApp and installation on the home screen. Google Play and the App Store were considered, but for family and friends the PWA delivers the same value with no cost or review.", "On iPhone, notifications only work with the app added to the Home Screen; the screen explains how."],
+]
+const screens = [
+    ["01.png", "Sign-up: age before stage"],
+    ["03.png", "Home: alerts, medication and protein"],
+    ["04.png", "Daily guide as a grid"],
+    ["05.png", "Workout with timer and rest"],
+    ["08.png", "Pizza by slice, with quantity"],
+    ["11.png", "Progress: waist ÷ height"],
+    ["13.png", "Pregnancy sign-up, home workout"],
+    ["14.png", "Pregnancy workout: prenatal notice"],
+]
+---
+
+<Base back lang="en" title="Fem · Anna Cabral" description="Fem, a web app created for women in every life stage: medication and hormone therapy, food by portion with each stage's nutrients, and workouts for each woman's reality.">
+    <CaseHero
+        label="Case 01 · Personal project · Fem"
+        title="An app for women in every life stage."
+        highlight="in every life stage."
+        lead="Fem was born for perimenopause, menopause and hormonal transition, and then grew to welcome women in every stage: menstrual cycle, pregnancy and breastfeeding. It brings together medication and hormone therapy without doses, food by portion with each stage's nutrients, workouts for the gym, dumbbells or home, reminders and a daily guide. The product was built end to end by the designer, with AI as a research and coding partner."
+        facts={[
+            ["Role", "The whole product, end to end"],
+            ["Period", "2026"],
+            ["Platform", "Installable web app (PWA)"],
+            ["Stack", "Figma · Supabase · Web Push · Netlify"],
+        ]}
+    />
+
+    <section class="screens dim">
+        <div class="frame"><ScreenFrame client:visible src="/img/fem/03.png" alt="Fem Home screen with alerts, today's medication and protein ring" caption="Home" /></div>
+        <div class="frame"><ScreenFrame client:visible src="/img/fem/05.png" alt="Workout screen with timer and rest between sets" caption="Workout" /></div>
+        <div class="frame"><ScreenFrame client:visible src="/img/fem/10.png" alt="Today's nutrients screen" caption="Today's nutrients" /></div>
+    </section>
+
+    <section class="section">
+        <p class="label">01 · Context</p>
+        <RevealText text="Four apps that didn't talk to each other." highlight="that didn't talk to each other." fontSize={72} />
+        <p class="body-l measure">The starting point was personal. In 2026, the designer entered perimenopause and began managing prescribed hormone therapy, nutrients that suddenly mattered more, and workouts across four separate tools. None of them addressed perimenopause, hormone therapy or nutrients in a vegetarian diet. When the app reached her friends, it became clear that women in other stages have the same routine to manage and no product designed for them.</p>
+        <dl class="cells cells-4">
+            {
+                tools.map(([t, b]) => (
+                    <div class="cell cell-fact">
+                        <dt class="h3">{t}</dt>
+                        <dd class="body">{b}</dd>
+                    </div>
+                ))
+            }
+        </dl>
+    </section>
+
+    <section class="section dim">
+        <p class="label">02 · Problem</p>
+        <h2 class="h2 measure">How can a woman, in any stage of life, track in one place the medication, nutrients and workouts her stage calls for, without becoming a slave to counting calories or converting food into grams?</h2>
+        <div class="cells cells-2">
+            {
+                hypotheses.map(([t, b]) => (
+                    <div class="cell">
+                        <span class="label">{t}</span>
+                        <p class="body">{b}</p>
+                    </div>
+                ))
+            }
+        </div>
+    </section>
+
+    <section class="section">
+        <p class="label">03 · Process</p>
+        <RevealText text="From a personal log to an app for every stage." highlight="to an app for every stage." fontSize={72} />
+        <ol class="cells cells-4 plain">
+            {
+                process.map(([n, t, b]) => (
+                    <li class="cell">
+                        <span class="label">{n}</span>
+                        <h3 class="h3">{t}</h3>
+                        <p class="body">{b}</p>
+                    </li>
+                ))
+            }
+        </ol>
+        <p class="body-l measure">The opportunity found in benchmarking: cycle and menopause apps focus on symptoms, and food and workout apps ignore the life stage. None of the 7 brings together, for free and in Portuguese, each woman's stage, medication on its real schedule, food in Brazilian portions and a workout that fits her time and place.</p>
+    </section>
+
+    <section class="section after-section">
+        <p class="label">Proto-personas</p>
+        <div class="cells cells-4">
+            {
+                personas.map(([n, d, need]) => (
+                    <div class="cell">
+                        <h3 class="h3">{n}</h3>
+                        <p class="label">{d}</p>
+                        <p class="body">{need}</p>
+                    </div>
+                ))
+            }
+        </div>
+        <p class="body">Hypotheses built from the designer's own use and conversations with friends. They will still be validated in usability tests.</p>
+    </section>
+
+    <section class="section dim">
+        <p class="label">04 · Decisions and trade-offs</p>
+        <RevealText text="Each stage changes the questions, the goals and the workout." highlight="the goals and the workout." fontSize={72} />
+        <div class="cells cells-2 decisions">
+            {
+                decisions.map(([t, b, trade]) => (
+                    <div class="cell cell-decision">
+                        <h3 class="h3">{t}</h3>
+                        <p class="body">{b}</p>
+                        <p class="body trade"><strong>Trade-off:</strong> {trade}</p>
+                    </div>
+                ))
+            }
+        </div>
+    </section>
+
+    <section class="section">
+        <p class="label">05 · Screens from the live app</p>
+        <RevealText text="Two journeys: the gym in perimenopause and home workouts in pregnancy." highlight="and home workouts in pregnancy." fontSize={64} />
+        <div class="gallery">
+            {
+                screens.map(([f, c]) => (
+                    <div class="g-item">
+                        <ScreenFrame client:visible src={`/img/fem/${f}`} alt={c} caption={c} scroll={false} />
+                    </div>
+                ))
+            }
+        </div>
+        <p class="body">Screenshots of the live version, with sample data. The app is in Portuguese.</p>
+    </section>
+
+    <section class="section dark">
+        <p class="label">06 · Design system and accessibility</p>
+        <h2 class="h2 measure">Dark theme, one accent and semantic colors only for data.</h2>
+        <ul class="swatches" aria-label="Palette">
+            {
+                [
+                    ["#0A0A0B", "Background"],
+                    ["#161618", "Surface"],
+                    ["#D3F45B", "Accent"],
+                    ["#45D3C7", "Water"],
+                    ["#A99BFF", "Sleep"],
+                    ["#FF6D4D", "Alert"],
+                ].map(([hex, n]) => (
+                    <li>
+                        <span class="sw" style={`background:${hex}`} />
+                        <span class="body">{n}</span>
+                        <span class="label">{hex}</span>
+                    </li>
+                ))
+            }
+        </ul>
+        <div class="cells cells-2 on-dark">
+            <div class="cell">
+                <h3 class="h3">Contrast and touch</h3>
+                <p class="body">Every text combination passes WCAG 2.2 AA (from 6.5:1 to 16.3:1). Touch targets of at least 44 px, labels always visible and animation turned off with “reduce motion”.</p>
+            </div>
+            <div class="cell">
+                <h3 class="h3">Assistive technology</h3>
+                <p class="body">Skip link, ordered headings, visible focus, accessible names on buttons, charts with text descriptions and spoken alerts for screen readers. Audited with axe-core with no violations. Neutral, non-ableist language throughout the interface.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section result">
+        <p class="label">07 · Outcome and learnings</p>
+        <h2 class="h2">Live and in use, with login, notifications and data isolated per user.</h2>
+        <p class="body-l measure">Designing for her own use sped everything up, but created blind spots. The sign-up, the list-style guide and the fixed patch date were only fixed through real use. Opening the product to all women showed that age, stage, training location and portions are product decisions, not interface details.</p>
+        <div class="cells cells-3">
+            <div class="cell"><span class="label">Next step</span><p class="body">Usability tests with the 4 proto-personas, using the open questions from the CSD matrix as the script.</p></div>
+            <div class="cell"><span class="label">Next step</span><p class="body">Review of the pregnancy and breastfeeding rules by a nutritionist and a fitness professional.</p></div>
+            <div class="cell"><span class="label">Next step</span><p class="body">Measure how long it takes to log a meal by portion versus by gram.</p></div>
+        </div>
+    </section>
+
+    <NextCase name="Uber Smiles" href="/en/cases/smiles" lang="en" />
+</Base>
+
+<style>
+    .screens {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 64px;
+        padding: 120px var(--gutter);
+    }
+    .frame {
+        width: 280px;
+        max-width: 100%;
+    }
+    .after-section {
+        padding-top: 0;
+    }
+    .plain {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    .decisions .cell-decision:nth-last-child(-n + 2) {
+        border-bottom: 0;
+    }
+    .trade {
+        color: var(--muted);
+    }
+    .trade strong {
+        color: var(--ink);
+        font-weight: 600;
+    }
+    .gallery {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 48px 32px;
+    }
+    .swatches {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 24px;
+    }
+    .swatches li {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        width: 120px;
+    }
+    .sw {
+        width: 100%;
+        aspect-ratio: 1;
+        border-radius: 22px;
+        box-shadow: 0 0 0 1px rgba(250, 250, 247, 0.16);
+    }
+    .on-dark {
+        border-top-color: #3a3934;
+    }
+    .result {
+        gap: 32px;
+    }
+    @media (max-width: 1199px) {
+        .screens {
+            flex-wrap: wrap;
+            gap: 32px;
+            padding: 80px var(--gutter);
+        }
+        .frame {
+            width: 240px;
+        }
+        .gallery {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+    }
+    @media (max-width: 809px) {
+        .screens {
+            flex-direction: column;
+            align-items: center;
+            padding: 48px var(--gutter);
+            gap: 40px;
+        }
+        .frame {
+            width: 100%;
+            max-width: 280px;
+        }
+        .gallery {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 32px 16px;
+        }
+        .swatches li {
+            width: calc(33% - 16px);
+        }
+        .decisions .cell-decision:nth-last-child(2) {
+            border-bottom: 1px solid var(--line);
+        }
+    }
+</style>

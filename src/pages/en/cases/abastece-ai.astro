@@ -1,0 +1,164 @@
+---
+import Base from "../../../layouts/Base.astro"
+import CaseHero from "../../../components/CaseHero.astro"
+import NextCase from "../../../components/NextCase.astro"
+import RevealText from "../../../components/RevealText.astro"
+import ScreenFrame from "../../../components/ScreenFrame"
+import AbastecePrototype from "../../../components/AbastecePrototype"
+
+const challenge = [
+    ["Lean team", "I was the consultancy's only UX designer, working with Grupo Ultra's UX designer."],
+    ["Business still deciding", "In interviews, the business team didn't yet know exactly what it wanted, and the available data was limited."],
+    ["Behind the market", "Compared to points apps like Shell Box and Premmia, Abastece Aí was outdated in look and technology, and didn't attract people with little interest in using it."],
+]
+const process = [
+    ["01", "Benchmarking with 14 criteria", "Nine points and cashback apps, such as Premmia, Shell Box, Carrefour, Latam Pass, Ame, Méliuz, GasBuddy and Upside, assessed with criteria based on usability heuristics, focusing on sign-up and onboarding. Accessibility emerged as an opportunity: only Carrefour offered support in Libras (Brazilian Sign Language)."],
+    ["02", "Usability test with 11 people", "In Jan 2023, users and non-users completed tasks in the low-fidelity prototype of sign-up and home. 11 of 11 found sign-up smooth, easy and quick, and 6 of 11 expected some explanation of the product and its benefits."],
+    ["03", "A/B test of the workshop screens", "In Feb 2023, we compared the screens created in the Dec 2022 workshop. 5 of 5 preferred typing the password on the same screen and having the hide icon next to the balance."],
+]
+const decisions = [
+    ["Quick menu at the top", 'Six shortcuts for what brings people to the app (fuel up, earn and redeem Km points, pay for purchases) and a "More options" pill that opens the full menu, grouped by area.'],
+    ["Separate balances, with an option to hide", "Points and cash balance in separate cards: in the tests, one person didn't know the difference between the two. The hide icon came from banking apps, and 9 of 11 were already looking for it."],
+    ["Stories for partners and coupons", "News, coupons and promotions in a format that 5 of 11 associated with Instagram, with a badge for what is new. Since 10 of 11 were drawn to discounts and cashback, those got prominence."],
+    ["A skippable welcome", 'Five short modals with simple animation. 10 of 11 found the tour worthwhile but preferred to skip it and learn by using, and the "Learn how to earn" block at the end of the home answers those who want to understand the program.'],
+]
+---
+
+<Base back lang="en" title="Abastece Aí · Anna Cabral" description="A new home screen for Grupo Ultra's Abastece Aí app, now KM de Vantagens: benchmarking, user testing and a home that changes with the sign-up stage.">
+    <CaseHero
+        label="Case 05 · Grupo Ultra · Abastece Aí"
+        title="A new home screen to reach people who didn't use the app."
+        highlight="people who didn't use the app."
+        lead="A new home screen for Abastece Aí, the loyalty app of the Ipiranga gas station network (Grupo Ultra), now called KM de Vantagens. The project started as a concept, knowing the app would soon become KM. The mission was to propose a new home that would bring the app to more customers, including those with little interest in using it."
+        facts={[
+            ["Role", "Rethink's only UX designer, working with Grupo Ultra's UX designer"],
+            ["Period", "Jan – Mar 2023"],
+            ["Scope", "Benchmarking, low fidelity, user testing and UI"],
+            ["Outcome", "Approved in Mar 2023 · structure kept in KM de Vantagens"],
+        ]}
+    />
+
+    <section class="section dark proto">
+        <p class="label">Prototype · scroll, swipe and tap (in Portuguese)</p>
+        <h2 class="h2">The home screen in action.</h2>
+        <AbastecePrototype client:load />
+    </section>
+
+    <section class="screens dim">
+        <div class="frame"><ScreenFrame client:visible src="/img/Pdja9oGqPyOtDzwazsOF4EZD0.png" alt="App home at sign-up stage II" caption="Home, stage II" /></div>
+        <div class="frame"><ScreenFrame client:visible src="/img/41lHLeF0Yxq2gUORYBciodqTGk.png" alt="Welcome modal" caption="Welcome to the new app" scroll={false} /></div>
+    </section>
+
+    <section class="section">
+        <p class="label">01 · The challenge</p>
+        <RevealText text="Little data, little certainty and an outdated app." highlight="and an outdated app." fontSize={72} />
+        <div class="cells cells-3">
+            {
+                challenge.map(([t, b]) => (
+                    <div class="cell">
+                        <h3 class="h3">{t}</h3>
+                        <p class="body">{b}</p>
+                    </div>
+                ))
+            }
+        </div>
+    </section>
+
+    <section class="section after-section">
+        <p class="label">Process</p>
+        <RevealText text="Test early, with the home still a draft." highlight="with the home still a draft." fontSize={72} />
+        <ol class="cells cells-3 plain">
+            {
+                process.map(([n, t, b]) => (
+                    <li class="cell">
+                        <span class="label">{n}</span>
+                        <h3 class="h3">{t}</h3>
+                        <p class="body">{b}</p>
+                    </li>
+                ))
+            }
+        </ol>
+    </section>
+
+    <section class="section dim">
+        <p class="label">02 · Design decisions</p>
+        <RevealText text="A home that changes with the sign-up stage." highlight="with the sign-up stage." fontSize={72} />
+        <p class="body-l measure">Without a clear business definition, I organized the home around what the app knew for sure: each person's sign-up stage. Those who only did the first step or came from the legacy KMV program see the unlocked features and the path to complete sign-up. Those with a complete profile pay, earn and redeem Km. Those who stopped halfway see what is missing, without being blocked.</p>
+        <div class="cells cells-2 decisions">
+            {
+                decisions.map(([t, b]) => (
+                    <div class="cell cell-decision">
+                        <h3 class="h3">{t}</h3>
+                        <p class="body">{b}</p>
+                    </div>
+                ))
+            }
+        </div>
+    </section>
+
+    <section class="section result">
+        <p class="label">03 · Outcome</p>
+        <h2 class="h2">Approved by users and the business. The structure survived the rebrand.</h2>
+        <p class="body-l measure">The new home was presented on March 17 and approved on March 20, 2023. It pleased both users and the business team and stayed live for about two years as Abastece Aí. When the app became KM de Vantagens, the Ipiranga loyalty program (Grupo Ultra), the home structure stayed practically the same, including the expanding cards.</p>
+        <div class="frame"><ScreenFrame client:visible video="/video/km-vantagens-home.mp4" alt="Screen recording of the KM de Vantagens app: home with balance, menu, carousels, redeem points and expanding questions" caption="KM de Vantagens today · recorded Oct 2026" /></div>
+    </section>
+
+    <NextCase name="Fem" href="/en/cases/fem" lang="en" />
+</Base>
+
+<style>
+    .proto {
+        padding-block: 120px;
+        gap: 48px;
+    }
+    .screens {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 64px;
+        padding: 120px var(--gutter);
+    }
+    .frame {
+        width: 300px;
+        max-width: 100%;
+    }
+    .after-section {
+        padding-top: 0;
+    }
+    .plain {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    .decisions .cell-decision:nth-last-child(-n + 2) {
+        border-bottom: 0;
+    }
+    .result {
+        gap: 32px;
+    }
+    @media (max-width: 1199px) {
+        .screens {
+            flex-wrap: wrap;
+            gap: 32px;
+            padding: 80px var(--gutter);
+        }
+        .frame {
+            width: 260px;
+        }
+    }
+    @media (max-width: 809px) {
+        .screens {
+            flex-direction: column;
+            align-items: center;
+            padding: 48px var(--gutter);
+            gap: 40px;
+        }
+        .frame {
+            width: 100%;
+            max-width: 300px;
+        }
+        .decisions .cell-decision:nth-last-child(2) {
+            border-bottom: 1px solid var(--line);
+        }
+    }
+</style>

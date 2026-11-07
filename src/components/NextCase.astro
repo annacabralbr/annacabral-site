@@ -5,11 +5,13 @@ import PillButton from "./PillButton"
 interface Props {
     name: string
     href: string
+    lang?: "pt" | "en"
 }
-const { name, href } = Astro.props
+const { name, href, lang = "pt" } = Astro.props
+const en = lang === "en"
 ---
 
 <section class="next dark">
-    <p class="h3">Próximo case → {name}</p>
-    <PillButton client:visible primary ink="#FAFAF7" label={`Conferir ${name} ↗`} link={href} />
+    <p class="h3">{en ? "Next case" : "Próximo case"} → {name}</p>
+    <PillButton client:visible primary ink="#FAFAF7" label={en ? `Open ${name} ↗` : `Conferir ${name} ↗`} link={href} />
 </section>

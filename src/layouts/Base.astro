@@ -6,13 +6,22 @@ interface Props {
     title: string
     description: string
     back?: boolean
+    lang?: "pt" | "en"
 }
-const { title, description, back = false } = Astro.props
+const { title, description, back = false, lang = "pt" } = Astro.props
+const en = lang === "en"
+const home = en ? "/en/" : "/"
+// endereço da mesma página no outro idioma
+const path = Astro.url.pathname.replace(/\/$/, "") || "/"
+const altPath = en ? path.replace(/^\/en/, "") || "/" : path === "/" ? "/en/" : "/en" + path
+const t = en
+    ? { cases: "Work", about: "About", process: "How I work", back: "← Anna Cabral", nav: "Main", other: "PT", otherLabel: "Versão em português", dock: "Let's talk" }
+    : { cases: "Cases", about: "Sobre", process: "Como trabalho", back: "← Anna Cabral", nav: "Principal", other: "EN", otherLabel: "English version", dock: "Vamos conversar" }
 const canonical = new URL(Astro.url.pathname, Astro.site)
 ---
 
 <!doctype html>
-<html lang="pt-BR">
+<html lang={en ? "en" : "pt-BR"}>
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -24,6 +33,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site)
         <meta property="og:type" content="website" />
         <meta property="og:url" content={canonical} />
         <meta name="theme-color" content="#FAFAF7" />
+        <link rel="alternate" hreflang={en ? "pt-BR" : "en"} href={new URL(altPath, Astro.site)} />
         <script is:inline>document.documentElement.classList.add("js")</script>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -34,27 +44,27 @@ const canonical = new URL(Astro.url.pathname, Astro.site)
         <header class="nav">
             {
                 back ? (
-                    <a class="navlink" href="/">
-                        <span class="u">← Anna Cabral</span>
+                    <a class="navlink" href={home}>
+                        <span class="u">{t.back}</span>
                     </a>
                 ) : (
-                    <a class="brand" href="/">
+                    <a class="brand" href={home}>
                         Anna Cabral
                     </a>
                 )
             }
-            <nav class="nav-links" aria-label="Principal">
+            <nav class="nav-links" aria-label={t.nav}>
                 {
                     !back && (
                         <>
-                            <a class="navlink" href="/#cases">
-                                <span class="u">Cases</span>
+                            <a class="navlink" href={`${home}#cases`}>
+                                <span class="u">{t.cases}</span>
                             </a>
-                            <a class="navlink hide-phone" href="/#sobre">
-                                <span class="u">Sobre</span>
+                            <a class="navlink hide-phone" href={`${home}#sobre`}>
+                                <span class="u">{t.about}</span>
                             </a>
-                            <a class="navlink hide-phone" href="/#processo">
-                                <span class="u">Como trabalho</span>
+                            <a class="navlink hide-phone" href={`${home}#processo`}>
+                                <span class="u">{t.process}</span>
                             </a>
                         </>
                     )
@@ -62,13 +72,16 @@ const canonical = new URL(Astro.url.pathname, Astro.site)
                 <a class="navlink" href="https://www.linkedin.com/in/annapaulacabral" target="_blank" rel="noopener noreferrer">
                     <span class="u">LinkedIn ↗</span>
                 </a>
+                <a class="navlink" href={altPath} hreflang={en ? "pt-BR" : "en"} lang={en ? "pt-BR" : "en"} aria-label={t.otherLabel}>
+                    <span class="u">{t.other}</span>
+                </a>
             </nav>
         </header>
         <main>
             <slot />
         </main>
         <slot name="after" />
-        {!back && <FloatingDock client:idle />}
+        {!back && <FloatingDock client:idle label={t.dock} />}
         <script>
             // anima títulos e blocos quando entram na tela; sem suporte, mostra tudo
             const items = document.querySelectorAll(".rv, .fade")
