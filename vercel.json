@@ -1,0 +1,8 @@
+{
+  "redirects": [
+    { "source": "/projects", "destination": "/", "permanent": true },
+    { "source": "/cases/cvc", "destination": "/#cases", "permanent": false },
+    { "source": "/cases/blw", "destination": "/", "permanent": true },
+    { "source": "/cases/reino", "destination": "/", "permanent": true }
+  ]
+}

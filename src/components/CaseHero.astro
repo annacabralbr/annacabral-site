@@ -1,6 +1,6 @@
 ---
 // Abertura de cada case: rótulo, título com tom secundário, texto de apoio e ficha técnica.
-import RevealText from "./RevealText"
+import RevealText from "./RevealText.astro"
 
 interface Props {
     label: string
@@ -14,7 +14,7 @@ const { label, title, highlight, lead, facts } = Astro.props
 
 <section class="case-hero">
     <p class="label">{label}</p>
-    <RevealText client:load tag="h1" text={title} highlight={highlight} fontSize={112} />
+    <RevealText tag="h1" text={title} highlight={highlight} fontSize={112} />
     <p class="body-l measure">{lead}</p>
     <dl class="cells cells-4 facts">
         {

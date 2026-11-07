@@ -1,0 +1,82 @@
+---
+// Título que entra por linhas mascaradas: cada palavra sobe de dentro de uma máscara, em
+// cascata curta, quando o título aparece na tela. Palavras em "highlight" ficam em tom
+// secundário. Sem JavaScript ou com "reduzir movimento", o texto já aparece parado.
+// O tamanho diminui pela largura do próprio bloco (container query).
+interface Props {
+    text: string
+    highlight?: string
+    tag?: "h1" | "h2" | "h3" | "p"
+    fontSize?: number
+    color?: string
+    align?: "left" | "center"
+}
+const { text, highlight = "", tag = "h2", fontSize = 64, color = "var(--ink)", align = "left" } = Astro.props
+const Tag = tag
+const words = text.split(" ")
+const marks = highlight.split(" ").filter(Boolean)
+const size = Math.round(fontSize * 0.78)
+const mobile = Math.min(size, Math.max(28, Math.round(size * 0.5)))
+const tablet = Math.min(size, Math.max(mobile, Math.round(size * 0.72)))
+---
+
+<div class="rt-box">
+    <Tag class:list={["rt", "rv", align === "center" && "center"]} aria-label={text} style={`--size:${size}px;--tablet:${tablet}px;--mobile:${mobile}px;color:${color}`}>
+        {
+            words.map((w, i) => (
+                <span class="w" aria-hidden="true">
+                    <span class:list={[marks.includes(w) && "hl"]} style={`--i:${Math.min(i, 17)}`}>
+                        {w}
+                    </span>
+                </span>
+            ))
+        }
+    </Tag>
+</div>
+
+<style>
+    .rt-box {
+        width: 100%;
+        container-type: inline-size;
+    }
+    .rt {
+        margin: 0;
+        width: 100%;
+        font-family: var(--font);
+        font-weight: 700;
+        font-size: var(--size);
+        line-height: 1;
+        letter-spacing: -0.035em;
+        display: flex;
+        flex-wrap: wrap;
+        column-gap: 0.24em;
+        text-wrap: balance;
+    }
+    .center {
+        justify-content: center;
+        text-align: center;
+    }
+    .w {
+        display: inline-block;
+        overflow: hidden;
+        padding-bottom: 0.12em;
+        margin-bottom: -0.12em;
+    }
+    .w > span {
+        display: inline-block;
+    }
+    .hl {
+        opacity: 0.42;
+    }
+    @container (max-width: 759px) {
+        .rt {
+            font-size: var(--tablet);
+        }
+    }
+    @container (max-width: 559px) {
+        .rt {
+            font-size: var(--mobile);
+            line-height: 1.08;
+        }
+    }
+</style>

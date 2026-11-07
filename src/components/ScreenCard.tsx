@@ -166,10 +166,6 @@ export default function ScreenCard(props: ScreenCardProps) {
         <motion.div
             ref={cardRef}
             className={cls}
-            initial={animate ? { y: 40, opacity: 0 } : false}
-            whileInView={{ y: 0, opacity: 1 }}
-            viewport={{ once: true, margin: "0px 0px -10% 0px" }}
-            transition={{ duration: 0.8, ease: EASE }}
             style={{ position: "relative", width: "100%", ...CONTAINER }}
         >
             <style>{css}</style>

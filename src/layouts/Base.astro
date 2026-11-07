@@ -24,6 +24,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site)
         <meta property="og:type" content="website" />
         <meta property="og:url" content={canonical} />
         <meta name="theme-color" content="#FAFAF7" />
+        <script is:inline>document.documentElement.classList.add("js")</script>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -68,5 +69,24 @@ const canonical = new URL(Astro.url.pathname, Astro.site)
         </main>
         <slot name="after" />
         {!back && <FloatingDock client:idle />}
+        <script>
+            // anima títulos e blocos quando entram na tela; sem suporte, mostra tudo
+            const items = document.querySelectorAll(".rv, .fade")
+            if (!("IntersectionObserver" in window)) items.forEach((el) => el.classList.add("in"))
+            else {
+                const io = new IntersectionObserver(
+                    (entries) => {
+                        for (const e of entries) {
+                            if (e.isIntersecting) {
+                                e.target.classList.add("in")
+                                io.unobserve(e.target)
+                            }
+                        }
+                    },
+                    { rootMargin: "0px 0px -8% 0px" },
+                )
+                items.forEach((el) => io.observe(el))
+            }
+        </script>
     </body>
 </html>

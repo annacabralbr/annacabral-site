@@ -2,7 +2,7 @@
 import Base from "../../layouts/Base.astro"
 import CaseHero from "../../components/CaseHero.astro"
 import NextCase from "../../components/NextCase.astro"
-import RevealText from "../../components/RevealText"
+import RevealText from "../../components/RevealText.astro"
 import UberPrototype from "../../components/UberPrototype"
 
 const challenge = [
@@ -34,13 +34,13 @@ const decisions = [
 
     <section class="section dark proto">
         <p class="label">Protótipo · toque na tela ou navegue pelas etapas</p>
-        <RevealText client:visible text="Veja o fluxo funcionando." highlight="funcionando." fontSize={72} color="#FAFAF7" />
-        <UberPrototype client:visible />
+        <RevealText text="Veja o fluxo funcionando." highlight="funcionando." fontSize={72} color="#FAFAF7" />
+        <UberPrototype client:load />
     </section>
 
     <section class="section">
         <p class="label">01 · O desafio</p>
-        <RevealText client:visible text="Um produto novo dentro de um app de milhas." highlight="dentro de um app de milhas." fontSize={72} />
+        <RevealText text="Um produto novo dentro de um app de milhas." highlight="dentro de um app de milhas." fontSize={72} />
         <div class="cells cells-3">
             {
                 challenge.map(([t, b]) => (
@@ -55,7 +55,7 @@ const decisions = [
 
     <section class="section dim">
         <p class="label">02 · Decisões de design</p>
-        <RevealText client:visible text="Regra clara antes, saída clara depois." highlight="saída clara depois." fontSize={72} />
+        <RevealText text="Regra clara antes, saída clara depois." highlight="saída clara depois." fontSize={72} />
         <div class="cells cells-2 decisions">
             {
                 decisions.map(([t, b]) => (

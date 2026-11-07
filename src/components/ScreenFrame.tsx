@@ -62,10 +62,6 @@ export default function ScreenFrame(props: ScreenFrameProps) {
     return (
         <motion.figure
             ref={ref}
-            initial={!reduce ? { y: 40, opacity: 0 } : false}
-            whileInView={{ y: 0, opacity: 1 }}
-            viewport={{ once: true, margin: "0px 0px -10% 0px" }}
-            transition={{ duration: 0.8, ease: [0.22, 0.61, 0.36, 1] }}
             style={{ position: "relative", width: "100%", margin: 0, display: "flex", flexDirection: "column", gap: 14 }}
         >
             <div style={{ borderRadius: isMobile ? 34 : 10, background: isMobile ? INK : "#fff", padding: isMobile ? 7 : 0, overflow: "hidden", boxShadow: "0 40px 80px -40px rgba(21,20,15,0.4), 0 0 0 1px rgba(21,20,15,0.06)" }}>

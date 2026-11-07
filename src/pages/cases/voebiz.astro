@@ -2,7 +2,7 @@
 import Base from "../../layouts/Base.astro"
 import CaseHero from "../../components/CaseHero.astro"
 import NextCase from "../../components/NextCase.astro"
-import RevealText from "../../components/RevealText"
+import RevealText from "../../components/RevealText.astro"
 import ScreenFrame from "../../components/ScreenFrame"
 
 const challenge = [
@@ -51,7 +51,7 @@ const screens = [
 
     <section class="section">
         <p class="label">01 · O desafio</p>
-        <RevealText client:visible text="Corporativo, mas dentro da família Smiles." highlight="dentro da família Smiles." fontSize={72} />
+        <RevealText text="Corporativo, mas dentro da família Smiles." highlight="dentro da família Smiles." fontSize={72} />
         <div class="cells cells-3">
             {
                 challenge.map(([t, b]) => (
@@ -66,7 +66,7 @@ const screens = [
 
     <section class="section dim">
         <p class="label">02 · Decisões de design</p>
-        <RevealText client:visible text="Identidade do grupo, regras de negócio claras." highlight="regras de negócio claras." fontSize={72} />
+        <RevealText text="Identidade do grupo, regras de negócio claras." highlight="regras de negócio claras." fontSize={72} />
         <div class="cells cells-2 decisions">
             {
                 decisions.map(([t, b]) => (

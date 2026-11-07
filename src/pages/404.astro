@@ -1,0 +1,12 @@
+---
+import Base from "../layouts/Base.astro"
+import PillButton from "../components/PillButton"
+---
+
+<Base back title="Página não encontrada · Anna Cabral" description="Esta página não existe.">
+    <section class="section">
+        <p class="label">Erro 404</p>
+        <h1 class="h2">Esta página não existe ou mudou de endereço.</h1>
+        <PillButton client:load primary label="Voltar para a home →" link="/" />
+    </section>
+</Base>

@@ -80,18 +80,19 @@ export default function ProcessAccordion({ items, panelHeight = 460 }: Props) {
                 const isOpen = open === i
                 const num = String(i + 1).padStart(2, "0")
                 return (
-                    <motion.button
+                    <button
                         key={i}
                         type="button"
                         aria-expanded={isOpen}
                         onMouseEnter={() => startTransition(() => setOpen(i))}
                         onFocus={() => startTransition(() => setOpen(i))}
                         onClick={() => startTransition(() => setOpen(i))}
-                        animate={{ flexGrow: isOpen ? 4 : 1, backgroundColor: isOpen ? "#EDEDEA" : "#FAFAF7" }}
-                        transition={t}
-                        style={{
+                                                style={{
+                            flexGrow: isOpen ? 4 : 1,
                             flexBasis: 0,
                             minWidth: 0,
+                            background: isOpen ? "#EDEDEA" : "#FAFAF7",
+                            transition: reduce ? "none" : "flex-grow .6s cubic-bezier(.22,.61,.36,1), background-color .6s",
                             height: panelHeight,
                             border: "none",
                             borderLeft: i > 0 ? border : "none",
@@ -130,7 +131,7 @@ export default function ProcessAccordion({ items, panelHeight = 460 }: Props) {
                                 </motion.span>
                             </>
                         )}
-                    </motion.button>
+                    </button>
                 )
             })}
         </div>

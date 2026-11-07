@@ -2,7 +2,7 @@
 import Base from "../../layouts/Base.astro"
 import CaseHero from "../../components/CaseHero.astro"
 import NextCase from "../../components/NextCase.astro"
-import RevealText from "../../components/RevealText"
+import RevealText from "../../components/RevealText.astro"
 import ScreenFrame from "../../components/ScreenFrame"
 import AbastecePrototype from "../../components/AbastecePrototype"
 
@@ -41,7 +41,7 @@ const decisions = [
     <section class="section dark proto">
         <p class="label">Protótipo · role, deslize e toque</p>
         <h2 class="h2">Veja a home funcionando.</h2>
-        <AbastecePrototype client:visible />
+        <AbastecePrototype client:load />
     </section>
 
     <section class="screens dim">
@@ -51,7 +51,7 @@ const decisions = [
 
     <section class="section">
         <p class="label">01 · O desafio</p>
-        <RevealText client:visible text="Poucos dados, pouca certeza e um app defasado." highlight="e um app defasado." fontSize={72} />
+        <RevealText text="Poucos dados, pouca certeza e um app defasado." highlight="e um app defasado." fontSize={72} />
         <div class="cells cells-3">
             {
                 challenge.map(([t, b]) => (
@@ -66,7 +66,7 @@ const decisions = [
 
     <section class="section after-section">
         <p class="label">Processo</p>
-        <RevealText client:visible text="Testar cedo, com a home ainda em rascunho." highlight="com a home ainda em rascunho." fontSize={72} />
+        <RevealText text="Testar cedo, com a home ainda em rascunho." highlight="com a home ainda em rascunho." fontSize={72} />
         <ol class="cells cells-3 plain">
             {
                 process.map(([n, t, b]) => (
@@ -82,7 +82,7 @@ const decisions = [
 
     <section class="section dim">
         <p class="label">02 · Decisões de design</p>
-        <RevealText client:visible text="Uma home que muda com a fase do cadastro." highlight="com a fase do cadastro." fontSize={72} />
+        <RevealText text="Uma home que muda com a fase do cadastro." highlight="com a fase do cadastro." fontSize={72} />
         <p class="body-l measure">Sem uma definição clara do negócio, organizei a home pelo que o app já tinha de certo: o estágio do cadastro de cada pessoa. Quem fez só a primeira etapa ou veio do legado KMV vê as funções liberadas e o caminho para completar. Quem tem o cadastro completo paga, acumula e troca Km. Quem parou no meio vê o que falta, sem travar o uso.</p>
         <div class="cells cells-2 decisions">
             {
