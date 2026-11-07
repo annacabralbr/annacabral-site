@@ -4,6 +4,7 @@ import CaseHero from "../../../components/CaseHero.astro"
 import NextCase from "../../../components/NextCase.astro"
 import RevealText from "../../../components/RevealText.astro"
 import ScreenFrame from "../../../components/ScreenFrame"
+import ScreenNavigator from "../../../components/ScreenNavigator"
 
 // Screens exported from Figma, in public/img/fem/
 const tools = [
@@ -40,17 +41,38 @@ const decisions = [
     ["What is left comes first", "In real use, the user finished a workout without two exercises that sat below a lot of text. Now pending exercises come first and, when finishing, a sheet warns: “2 exercises left”.", "General instructions sit in a collapsed block at the end."],
     ["Web app, no app stores", "A link on WhatsApp and installation on the home screen. Google Play and the App Store were considered, but for family and friends the PWA delivers the same value with no cost or review.", "On iPhone, notifications only work with the app added to the Home Screen; the screen explains how."],
 ]
-const screens = [
-    ["01.png", "Sign-up: age before stage"],
-    ["03.png", "Home: alerts, medication and protein"],
-    ["04.png", "Daily guide as a grid"],
-    ["05.png", "Workout with timer and rest"],
-    ["08.png", "Pizza by slice, with quantity"],
-    ["11.png", "Progress: waist ÷ height"],
-    ["13.png", "Pregnancy sign-up, home workout"],
-    ["14.png", "Pregnancy workout: prenatal notice"],
-]
----
+const journeys = [
+    {
+        title: "Anna, 48 · perimenopause · gym",
+        screens: [
+            ["intro-1.png", "Intro: who it is for"],
+            ["intro-2.png", "Intro: medication"],
+            ["intro-3.png", "Intro: food"],
+            ["intro-4.png", "Intro: workouts"],
+            ["01.png", "Sign-up: age before stage"],
+            ["02.png", "Medication on its real schedule"],
+            ["03.png", "Home: alerts, medication and protein"],
+            ["04.png", "Daily guide as a grid"],
+            ["05.png", "Workout with timer and rest"],
+            ["06.png", "Open exercise: sets and load"],
+            ["07.png", "Today's workout finished"],
+            ["08.png", "Pizza by slice, with quantity"],
+            ["09.png", "Filled cheese bread by size"],
+            ["10.png", "Today's nutrients"],
+            ["11.png", "Progress: waist ÷ height"],
+            ["12.png", "Plan: where you train"],
+        ],
+    },
+    {
+        title: "Bia, 31 · pregnant · home workouts",
+        screens: [
+            ["13.png", "Pregnancy sign-up, home workout"],
+            ["14.png", "Pregnancy workout: prenatal notice"],
+            ["15.png", "Home exercises"],
+            ["16.png", "Pregnancy guide"],
+        ],
+    },
+].map((j) => ({ title: j.title, screens: j.screens.map(([f, caption]) => ({ src: `/img/fem/${f}`, caption })) }))---
 
 <Base back lang="en" title="Fem · Anna Cabral" description="Fem, a web app created for women in every life stage: medication and hormone therapy, food by portion with each stage's nutrients, and workouts for each woman's reality.">
     <CaseHero
@@ -67,9 +89,9 @@ const screens = [
     />
 
     <section class="screens dim">
-        <div class="frame"><ScreenFrame client:visible src="/img/fem/03.png" alt="Fem Home screen with alerts, today's medication and protein ring" caption="Home" /></div>
-        <div class="frame"><ScreenFrame client:visible src="/img/fem/05.png" alt="Workout screen with timer and rest between sets" caption="Workout" /></div>
-        <div class="frame"><ScreenFrame client:visible src="/img/fem/10.png" alt="Today's nutrients screen" caption="Today's nutrients" /></div>
+        <div class="frame"><ScreenFrame client:visible src="/img/fem/intro-1.png" alt="First Fem intro screen: made for you, in any stage" caption="Intro · who it is for" scroll={false} /></div>
+        <div class="frame"><ScreenFrame client:visible src="/img/fem/intro-2.png" alt="Second intro screen: never forget your medication again" caption="Intro · medication" scroll={false} /></div>
+        <div class="frame"><ScreenFrame client:visible src="/img/fem/intro-3.png" alt="Third intro screen: food without counting grams" caption="Intro · food" scroll={false} /></div>
     </section>
 
     <section class="section">
@@ -155,16 +177,8 @@ const screens = [
     <section class="section">
         <p class="label">05 · Screens from the live app</p>
         <RevealText text="Two journeys: the gym in perimenopause and home workouts in pregnancy." highlight="and home workouts in pregnancy." fontSize={64} />
-        <div class="gallery">
-            {
-                screens.map(([f, c]) => (
-                    <div class="g-item">
-                        <ScreenFrame client:visible src={`/img/fem/${f}`} alt={c} caption={c} scroll={false} />
-                    </div>
-                ))
-            }
-        </div>
-        <p class="body">Screenshots of the live version, with sample data. The app is in Portuguese.</p>
+        <ScreenNavigator client:load journeys={journeys} prevLabel="Previous screen" nextLabel="Next screen" ofLabel="of" />
+        <p class="body">Screenshots of the live version, with sample data. The app is in Portuguese. Use the arrows, the list or swipe the screen.</p>
     </section>
 
     <section class="section dark">
