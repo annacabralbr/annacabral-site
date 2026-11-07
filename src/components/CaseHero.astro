@@ -1,0 +1,56 @@
+---
+// Abertura de cada case: rótulo, título com tom secundário, texto de apoio e ficha técnica.
+import RevealText from "./RevealText"
+
+interface Props {
+    label: string
+    title: string
+    highlight: string
+    lead: string
+    facts: [string, string][]
+}
+const { label, title, highlight, lead, facts } = Astro.props
+---
+
+<section class="case-hero">
+    <p class="label">{label}</p>
+    <RevealText client:load tag="h1" text={title} highlight={highlight} fontSize={112} />
+    <p class="body-l measure">{lead}</p>
+    <dl class="cells cells-4 facts">
+        {
+            facts.map(([k, v]) => (
+                <div class="cell cell-fact">
+                    <dt class="label">{k}</dt>
+                    <dd class="body">{v}</dd>
+                </div>
+            ))
+        }
+    </dl>
+</section>
+
+<style>
+    .case-hero {
+        padding: 140px var(--gutter) 96px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 48px;
+    }
+    .facts {
+        margin: 0;
+    }
+    .facts dd {
+        margin: 0;
+    }
+    @media (max-width: 1199px) {
+        .case-hero {
+            padding: 120px var(--gutter) 80px;
+        }
+    }
+    @media (max-width: 809px) {
+        .case-hero {
+            padding: 80px var(--gutter) 56px;
+            gap: 28px;
+        }
+    }
+</style>

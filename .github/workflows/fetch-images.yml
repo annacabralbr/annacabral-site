@@ -1,0 +1,30 @@
+# Baixa as imagens do Framer para o repositório (uma vez) e salva num commit.
+# Roda sozinho quando o código muda; também pode ser disparado em Actions › "Baixar imagens".
+name: Baixar imagens
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ["src/**", "scripts/fetch-images.mjs"]
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/fetch-images.mjs
+      - name: Salvar imagens novas
+        run: |
+          git add public/img
+          if git diff --cached --quiet; then
+            echo "Nenhuma imagem nova."
+          else
+            git -c user.name="github-actions" -c user.email="github-actions@users.noreply.github.com" commit -m "Imagens baixadas do Framer"
+            git push
+          fi

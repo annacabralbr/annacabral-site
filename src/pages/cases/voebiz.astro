@@ -1,0 +1,132 @@
+---
+import Base from "../../layouts/Base.astro"
+import CaseHero from "../../components/CaseHero.astro"
+import NextCase from "../../components/NextCase.astro"
+import RevealText from "../../components/RevealText"
+import ScreenFrame from "../../components/ScreenFrame"
+
+const challenge = [
+    ["Guarda-chuva GOL/Smiles", "Como empresa do grupo, o VoeBiz precisava seguir o padrão do novo site da Smiles e usar os componentes do design system."],
+    ["Tom corporativo", "A linguagem do VoeBiz é mais corporativa que a da Smiles. O desafio foi manter esse tom sem sair da identidade visual do grupo."],
+    ["Regras de pontos claras", "Como acumular, como resgatar com o token VoeBiz e as empresas participantes (GOL, Air France e KLM), organizados para a empresa encontrar sozinha."],
+]
+const decisions = [
+    ["Componentes do design system", "Cards, botões, tipografia e grid vieram do design system do novo site da Smiles, sem criar um padrão paralelo para o VoeBiz."],
+    ["Diversidade nas imagens", "Mesmo com a linguagem mais corporativa, tivemos muito cuidado na escolha das imagens, para representar com mais diversidade quem são os clientes do VoeBiz."],
+    ["Mesma estrutura para cada parceira", "GOL, Air France e KLM com a mesma estrutura de página e de termos, para comparar as regras de cada uma sem esforço."],
+    ["Regras da categoria Prime", "Para ser Prime, a empresa precisa de 70 mil pontos qualificáveis em 12 meses. Desenhei os avisos para quem atinge, para quem renova e para quem não chega à meta, além do extrato de quem vinha da conta antiga."],
+    ["Cancelamento com regras claras", "A solicitação de reembolso só libera depois dos dados do cartão e do aceite das regras. A bandeira aparece pelos primeiros dígitos, cartão vencido é barrado na hora e a senha avisa quando resta só uma tentativa."],
+    ["Dados em análise, sem dúvida", "Na alteração cadastral, enquanto a central valida os novos dados, o botão fica desabilitado e um tooltip explica por que as informações antigas continuam aparecendo."],
+]
+const screens = [
+    { src: "/img/EwrDDNLsFq4BICrEcrVIRtZzmk.png", alt: "Página Conheça o programa VoeBiz", caption: "Conheça o programa", speed: 110 },
+    { src: "/img/uoqvzti9VVMygQEeVTAT5fWPJs.png", alt: "Página Como resgatar seus pontos", caption: "Como resgatar seus pontos", speed: 100 },
+    { src: "/img/N4qyvRYrSTw8TXzWASf9AfHvQc.png", alt: "Página da Air France como empresa participante", caption: "Empresa participante: Air France", speed: 100 },
+]
+---
+
+<Base back title="VoeBiz · Anna Cabral" description="Facelift das páginas institucionais do VoeBiz, programa corporativo da GOL, com a identidade e o design system da Smiles.">
+    <CaseHero
+        label="Case 03 · GOL · VoeBiz"
+        title="Meu primeiro desafio de UX: o VoeBiz com a identidade da Smiles."
+        highlight="com a identidade da Smiles."
+        lead="VoeBiz é o programa de pontos da GOL para empresas e foi meu primeiro desafio como UX júnior. Comecei por entregas menores: desenhei, em desktop e mobile, gerenciamento de conta, alteração cadastral e cancelamento e reembolso, além de novo header, footer e e-mails transacionais. Depois, assumi sozinha o facelift das páginas institucionais."
+        facts={[
+            ["Papel", "UX Designer júnior · Rethink"],
+            ["Período", "Jun – Dez 2022"],
+            ["Escopo", "Facelift institucional, cadastro, conta e cancelamento"],
+            ["Plataformas", "Desktop e mobile"],
+        ]}
+    />
+
+    <section class="screens dim">
+        {
+            screens.map((s) => (
+                <div class="frame">
+                    <ScreenFrame client:visible device="desktop" {...s} />
+                </div>
+            ))
+        }
+    </section>
+
+    <section class="section">
+        <p class="label">01 · O desafio</p>
+        <RevealText client:visible text="Corporativo, mas dentro da família Smiles." highlight="dentro da família Smiles." fontSize={72} />
+        <div class="cells cells-3">
+            {
+                challenge.map(([t, b]) => (
+                    <div class="cell">
+                        <h3 class="h3">{t}</h3>
+                        <p class="body">{b}</p>
+                    </div>
+                ))
+            }
+        </div>
+    </section>
+
+    <section class="section dim">
+        <p class="label">02 · Decisões de design</p>
+        <RevealText client:visible text="Identidade do grupo, regras de negócio claras." highlight="regras de negócio claras." fontSize={72} />
+        <div class="cells cells-2 decisions">
+            {
+                decisions.map(([t, b]) => (
+                    <div class="cell cell-decision">
+                        <h3 class="h3">{t}</h3>
+                        <p class="body">{b}</p>
+                    </div>
+                ))
+            }
+        </div>
+    </section>
+
+    <section class="section result">
+        <p class="label">03 · Resultado</p>
+        <h2 class="h2">Foi ao ar e ficou até 2025.</h2>
+        <p class="body-l measure">As páginas institucionais foram ao ar e ficaram em uso até 2025. Para um primeiro projeto como UX júnior, foi o que me deu base para tudo o que veio depois: trabalhar dentro de um design system, equilibrar o tom de uma marca com o padrão do grupo e cuidar da representação de quem usa o produto.</p>
+    </section>
+
+    <NextCase name="Abastece Aí" href="/cases/abastece-ai" />
+</Base>
+
+<style>
+    .screens {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 40px;
+        padding: 120px var(--gutter);
+    }
+    .frame {
+        width: 420px;
+        max-width: 100%;
+        min-width: 0;
+    }
+    .result {
+        gap: 32px;
+    }
+    .decisions .cell-decision:nth-last-child(-n + 2) {
+        border-bottom: 0;
+    }
+    @media (max-width: 1199px) {
+        .screens {
+            flex-wrap: wrap;
+            gap: 32px;
+            padding: 80px var(--gutter);
+        }
+        .frame {
+            width: 300px;
+        }
+    }
+    @media (max-width: 809px) {
+        .screens {
+            flex-direction: column;
+            padding: 48px var(--gutter);
+        }
+        .frame {
+            width: 100%;
+        }
+        .decisions .cell-decision:nth-last-child(2) {
+            border-bottom: 1px solid var(--line);
+        }
+    }
+</style>

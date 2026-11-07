@@ -1,0 +1,98 @@
+---
+import Base from "../../layouts/Base.astro"
+import CaseHero from "../../components/CaseHero.astro"
+import NextCase from "../../components/NextCase.astro"
+import RevealText from "../../components/RevealText"
+import UberPrototype from "../../components/UberPrototype"
+
+const challenge = [
+    ["Dois jeitos de pagar", "Comprar créditos com dinheiro e acumular milhas, ou resgatar os mesmos créditos usando milhas. Duas lógicas que precisavam parecer uma só jornada."],
+    ["Dois perfis, dois valores", "Cliente Smiles e Clube Smiles/Diamante ganham e gastam quantidades diferentes de milhas. A tela tinha que mostrar as duas sem confundir."],
+    ["Regras do parceiro", "Valores entre R$ 50 e R$ 400, aceite obrigatório dos termos da Uber e a assinatura do Uber Pass por 6 meses no mesmo fluxo."],
+]
+const decisions = [
+    ["Limites antes do erro", "O campo de valor abre junto com o teclado, já mostrando o mínimo de R$ 50 e o máximo de R$ 400. Se a pessoa digita fora disso, o aviso aparece embaixo do campo e repete a regra."],
+    ["Milhas visíveis antes de pagar", "As milhas são recalculadas a cada valor escolhido, na compra e no resgate. Para quem é Clube Smiles ou Diamante, o valor de Cliente Smiles aparece riscado, para a vantagem ficar evidente."],
+    ["Termos como condição, não como rodapé", "O botão de pagar só ativa depois do aceite dos termos da Uber, com o documento a um toque, sem sair do resumo. Na assinatura do Uber Pass, a mesma regra vale no modal de adesão."],
+    ["Exceções desenhadas", "Bottom sheet de confirmação em toda interrupção, aviso de milhas insuficientes que sugere pagar em dinheiro, pagamento recusado com caminho para tentar de novo e estado vazio no Meu Uber."],
+]
+---
+
+<Base back title="Uber Smiles · Anna Cabral" description="Compra de créditos de Uber com dinheiro ou milhas no app da Smiles: 12 fluxos documentados, regras claras e exceções desenhadas.">
+    <CaseHero
+        label="Case 01 · Smiles · GOL"
+        title="Créditos de Uber pagos com milhas"
+        highlight="pagos com milhas"
+        lead="No novo app da Smiles, o programa de fidelidade da GOL, a Rethink conduzia o as-is das jornadas existentes. Fiquei responsável pela experiência de compra de créditos para viagens de Uber: comprar com dinheiro e acumular milhas, ou resgatar créditos usando milhas. Documentei 12 fluxos, separados por perfil (Cliente Smiles e Clube Smiles/Diamante), forma de pagamento, termos de uso e Meu Uber."
+        facts={[
+            ["Papel", "Product Designer · Rethink"],
+            ["Período", "Out 2022"],
+            ["Escopo", "Fluxos, UI, microcopy e estados de erro"],
+            ["Plataforma", "App Smiles · mobile"],
+        ]}
+    />
+
+    <section class="section dark proto">
+        <p class="label">Protótipo · toque na tela ou navegue pelas etapas</p>
+        <RevealText client:visible text="Veja o fluxo funcionando." highlight="funcionando." fontSize={72} color="#FAFAF7" />
+        <UberPrototype client:visible />
+    </section>
+
+    <section class="section">
+        <p class="label">01 · O desafio</p>
+        <RevealText client:visible text="Um produto novo dentro de um app de milhas." highlight="dentro de um app de milhas." fontSize={72} />
+        <div class="cells cells-3">
+            {
+                challenge.map(([t, b]) => (
+                    <div class="cell">
+                        <h3 class="h3">{t}</h3>
+                        <p class="body">{b}</p>
+                    </div>
+                ))
+            }
+        </div>
+    </section>
+
+    <section class="section dim">
+        <p class="label">02 · Decisões de design</p>
+        <RevealText client:visible text="Regra clara antes, saída clara depois." highlight="saída clara depois." fontSize={72} />
+        <div class="cells cells-2 decisions">
+            {
+                decisions.map(([t, b]) => (
+                    <div class="cell cell-decision">
+                        <h3 class="h3">{t}</h3>
+                        <p class="body">{b}</p>
+                    </div>
+                ))
+            }
+        </div>
+    </section>
+
+    <section class="section result">
+        <p class="label">03 · Resultado</p>
+        <h2 class="h2">No ar desde 2023. Em 2025 a interface mudou, as regras ficaram.</h2>
+        <p class="body-l measure">Minha versão foi lançada no app da Smiles em 2023. Em 2025, o fluxo foi atualizado para o conceito do Tangerina, o design system da Smiles, e as regras de negócio definidas aqui seguiram as mesmas: valores de R$ 50 a R$ 400, milhas diferentes por perfil, aceite dos termos da Uber e o Uber Pass dentro do fluxo.</p>
+    </section>
+
+    <NextCase name="Smiles Carros" href="/cases/smiles-carros" />
+</Base>
+
+<style>
+    .proto {
+        gap: 72px;
+    }
+    .result {
+        gap: 32px;
+    }
+    .decisions .cell-decision:nth-last-child(-n + 2) {
+        border-bottom: 0;
+    }
+    @media (max-width: 809px) {
+        .proto {
+            gap: 36px;
+        }
+        .decisions .cell-decision:nth-last-child(2) {
+            border-bottom: 1px solid var(--line);
+        }
+    }
+</style>
