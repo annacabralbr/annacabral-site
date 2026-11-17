@@ -2,6 +2,7 @@
 // No hover: cursor grande circular com "Mostrar detalhes ↗", cantos arredondam e a
 // mídia aproxima levemente. Sem animação com "reduzir movimento".
 import { useRef, useState, useEffect, useId, startTransition, type CSSProperties, type ReactNode, type MouseEvent } from "react"
+import { nw } from "../lib/nowidow"
 import { motion, useInView, useReducedMotion, useMotionValue, useSpring } from "framer-motion"
 
 interface ScreenCardProps {
@@ -15,6 +16,8 @@ interface ScreenCardProps {
     device: "desktop" | "mobile"
     link: string
     speed?: number
+    // tela de carregamento que enche a barra e leva a outra tela (ex.: Fem)
+    loader?: { splash: string; after: string; alt: string }
 }
 
 const FONT = "'Inter Tight', 'Inter', system-ui, sans-serif"
@@ -24,7 +27,7 @@ const INK = "#15140F"
 const PAPER = "#FAFAF7"
 
 export default function ScreenCard(props: ScreenCardProps) {
-    const { index, client, title, meta, tags, cta = "Mostrar detalhes", src, device, link, speed = 60 } = props
+    const { index, client, title, meta, tags, cta = "Mostrar detalhes", src, device, link, speed = 60, loader } = props
     const reduce = useReducedMotion()
     const animate = !reduce
     const cls = "sc" + useId().replace(/[^a-zA-Z0-9]/g, "")
@@ -61,6 +64,38 @@ export default function ScreenCard(props: ScreenCardProps) {
         }
     }, [src])
 
+    // ciclo do carregamento: barra 0→100, troca para a tela seguinte, segura e repete
+    const [pct, setPct] = useState(0)
+    const [phase, setPhase] = useState<"load" | "after">("load")
+    useEffect(() => {
+        if (!loader) return
+        if (reduce) {
+            setPhase("after")
+            return
+        }
+        if (!inView) return
+        let raf = 0
+        let start = performance.now()
+        const LOAD = 2400,
+            HOLD = 400,
+            AFTER = 5200
+        const tick = (now: number) => {
+            const t = now - start
+            if (t < LOAD) {
+                setPhase("load")
+                setPct(Math.round(100 * (1 - Math.pow(1 - t / LOAD, 2))))
+            } else if (t < LOAD + HOLD) setPct(100)
+            else if (t < LOAD + HOLD + AFTER) setPhase("after")
+            else {
+                start = now
+                setPct(0)
+            }
+            raf = requestAnimationFrame(tick)
+        }
+        raf = requestAnimationFrame(tick)
+        return () => cancelAnimationFrame(raf)
+    }, [loader, inView, reduce])
+
     const duration = Math.max(5, travel / Math.max(10, speed))
     const scrolling = animate && inView && travel > 0
     const isMobile = device === "mobile"
@@ -89,6 +124,37 @@ export default function ScreenCard(props: ScreenCardProps) {
                         transformOrigin: "center bottom",
                     }}
                 >
+                    {loader ? (
+                        <div style={{ position: "relative", width: "100%", aspectRatio: "1170 / 2532", overflow: "hidden", background: "#0A0A0B", containerType: "inline-size" } as CSSProperties}>
+                            <img src={loader.splash} alt="" loading="lazy" decoding="async" draggable={false} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", display: "block" }} />
+                            {/* barra e número animados, desenhados por cima da imagem no mesmo lugar */}
+                            <span aria-hidden="true" style={{ position: "absolute", left: "5.64%", top: "93.6%", width: "68.21%", height: "1.19%", background: "#0A0A0B" }}>
+                                <span style={{ display: "block", height: "100%", width: `${pct}%`, background: "#D3F45B" }} />
+                            </span>
+                            <span aria-hidden="true" style={{ position: "absolute", left: "85.4%", top: "92.5%", width: "10%", height: "3.4%", background: "#0A0A0B" }} />
+                            <span aria-hidden="true" style={{ position: "absolute", right: "5.56%", bottom: "4.4%", color: "#F2F2F2", fontFamily: FONT, fontWeight: 400, fontSize: "6.9cqw", lineHeight: 1, fontVariantNumeric: "tabular-nums", letterSpacing: "-0.02em" }}>
+                                {pct}
+                            </span>
+                            <img
+                                src={loader.after}
+                                alt={loader.alt}
+                                loading="lazy"
+                                decoding="async"
+                                draggable={false}
+                                style={{
+                                    position: "absolute",
+                                    inset: 0,
+                                    width: "100%",
+                                    height: "100%",
+                                    objectFit: "cover",
+                                    objectPosition: phase === "after" && animate ? "50% 100%" : "50% 0%",
+                                    display: "block",
+                                    opacity: phase === "after" ? 1 : 0,
+                                    transition: animate ? "opacity .5s ease, object-position 4.6s ease-in-out .5s" : "none",
+                                }}
+                            />
+                        </div>
+                    ) : (
                     <div ref={viewRef} style={{ position: "relative", width: "100%", aspectRatio: isMobile ? "9 / 19" : "16 / 10", overflow: "hidden", background: "#fff" }}>
                         <motion.img
                             ref={imgRef}
@@ -103,18 +169,19 @@ export default function ScreenCard(props: ScreenCardProps) {
                             transition={scrolling ? { duration: duration * 2 + 3, times: [0, 0.45, 0.55, 0.95, 1], ease: "easeInOut", repeat: Infinity } : { duration: 0.6 }}
                         />
                     </div>
+                    )}
                 </motion.div>
             </motion.div>
 
             <div style={{ padding: "22px 2px 0 2px", display: "flex", flexDirection: "column", gap: 10 }}>
                 <span style={label12}>
-                    {index} · {client}
+                    {index} · {nw(client)}
                 </span>
                 <span className="sc-title" style={{ fontFamily: FONT, fontWeight: 700, fontSize: 30, lineHeight: 1.1, letterSpacing: "-0.03em", color: INK }}>
-                    {title}
+                    {title.replace(/ (\S+)$/, "\u00a0$1")}
                 </span>
                 <span className="sc-meta" style={{ fontFamily: FONT, fontSize: 15, color: "#73716C" }}>
-                    {meta} — {tags}
+                    {meta} — {tags.replace(/ (\S+)$/, "\u00a0$1")}
                 </span>
                 <span style={{ fontFamily: FONT, fontSize: 15, fontWeight: 500, color: INK, display: "inline-flex", gap: 8, marginTop: 4 }}>
                     <span style={{ backgroundImage: `linear-gradient(${INK},${INK})`, backgroundRepeat: "no-repeat", backgroundPosition: "0 100%", backgroundSize: hover ? "100% 1px" : "0% 1px", transition: "background-size .45s cubic-bezier(.33,1,.68,1)" }}>{cta}</span>

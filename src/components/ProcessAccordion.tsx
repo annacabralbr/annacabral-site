@@ -3,6 +3,7 @@
 // Em telas estreitas vira acordeão vertical (toque abre e fecha, + / −).
 // Respeita "reduzir movimento".
 import { useEffect, useRef, useState, startTransition } from "react"
+import { nw } from "../lib/nowidow"
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion"
 
 interface Props {
@@ -47,7 +48,7 @@ export default function ProcessAccordion({ items, panelHeight = 460 }: Props) {
                                 style={{ width: "100%", minHeight: 64, display: "flex", alignItems: "center", gap: 14, padding: "18px 0", background: "transparent", border: "none", textAlign: "left", cursor: "pointer", color: "#15140F", fontFamily: FONT }}
                             >
                                 <span style={{ fontSize: 13, color: "#73716C", letterSpacing: "0.08em", width: 22, flex: "none" }}>{num}</span>
-                                <span style={{ flex: 1, fontWeight: 700, fontSize: 22, letterSpacing: "-0.03em", lineHeight: 1.15 }}>{title}</span>
+                                <span style={{ flex: 1, fontWeight: 700, fontSize: 22, letterSpacing: "-0.03em", lineHeight: 1.15 }}>{nw(title)}</span>
                                 <motion.span aria-hidden="true" animate={{ rotate: isOpen ? 45 : 0 }} transition={t} style={{ fontSize: 26, lineHeight: 1, fontWeight: 400, flex: "none" }}>
                                     +
                                 </motion.span>
@@ -63,7 +64,7 @@ export default function ProcessAccordion({ items, panelHeight = 460 }: Props) {
                                         transition={t}
                                         style={{ overflow: "hidden" }}
                                     >
-                                        <p style={{ margin: 0, padding: "0 0 22px 36px", fontFamily: FONT, fontSize: 16, lineHeight: 1.6, color: "#3A3934" }}>{body}</p>
+                                        <p style={{ margin: 0, padding: "0 0 22px 36px", fontFamily: FONT, fontSize: 16, lineHeight: 1.6, color: "#3A3934" }}>{nw(body)}</p>
                                     </motion.div>
                                 )}
                             </AnimatePresence>
@@ -118,7 +119,7 @@ export default function ProcessAccordion({ items, panelHeight = 460 }: Props) {
                             <>
                                 <span style={{ display: "flex", alignItems: "baseline", gap: 12 }}>
                                     <span style={{ fontSize: 13, color: "#73716C", letterSpacing: "0.08em" }}>{num}</span>
-                                    <span style={{ fontWeight: 700, fontSize: 30, letterSpacing: "-0.03em", lineHeight: 1.1 }}>{title}</span>
+                                    <span style={{ fontWeight: 700, fontSize: 30, letterSpacing: "-0.03em", lineHeight: 1.1 }}>{nw(title)}</span>
                                 </span>
                                 <motion.span
                                     key="b"
@@ -127,7 +128,7 @@ export default function ProcessAccordion({ items, panelHeight = 460 }: Props) {
                                     transition={{ ...t, delay: reduce ? 0 : 0.15 }}
                                     style={{ fontSize: 17, lineHeight: 1.55, color: "#3A3934", maxWidth: 460, marginTop: "auto" }}
                                 >
-                                    {body}
+                                    {nw(body)}
                                 </motion.span>
                             </>
                         )}

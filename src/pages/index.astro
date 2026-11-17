@@ -18,6 +18,7 @@ const cases = [
         meta: "2026 · produto de ponta a ponta · no ar",
         tags: "Discovery · Produto · UI · Acessibilidade",
         src: "/img/fem/intro-1.png",
+        loader: { splash: "/img/fem/carregamento.png", after: "/img/fem/seu-dia.png", alt: "Tela inicial do Fem, Seu dia, com calorias, treino, caminhada, água e proteína" },
         device: "mobile",
         link: "/cases/fem",
         speed: 44,
@@ -103,7 +104,7 @@ const cvcList = ["Novas experiências do site e do app", "UX de todos os produto
         <div class="cvc dim">
             <div class="cvc-text">
                 <p class="label">Sob NDA · apresento ao vivo</p>
-                <RevealText text="CVC Viagens: as novas experiências do site e do app B2C" highlight="do site e do app B2C" fontSize={64} />
+                <RevealText text={"CVC Viagens: as novas experiências do site e\u00a0do\u00a0app\u00a0B2C"} highlight="do site e do app B2C" fontSize={64} />
                 <p class="body">Desde abril de 2024 na maior operadora de turismo do país. Desenho as novas experiências do site e do app B2C, com UX de todos os produtos, da busca ao checkout. Também faço a sustentação de UX desses produtos e atuo no Atlas, o site usado nas lojas físicas. Como é um trabalho sob NDA, mostro telas, decisões e resultados numa conversa.</p>
                 <PillButton client:visible primary label="Agendar uma apresentação ↗" link={`mailto:${EMAIL}?subject=${encodeURIComponent("Apresentação do case CVC")}`} />
             </div>

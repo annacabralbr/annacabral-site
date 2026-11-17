@@ -27,6 +27,7 @@ COMMON = [
 PAGES = {}
 
 PAGES['index.astro'] = [
+    ('alt: "Tela inicial do Fem, Seu dia, com calorias, treino, caminhada, água e proteína"', 'alt: "Fem home screen, Your day, with calories, workout, walking, water and protein (app in Portuguese)"'),
     ('client: "Projeto pessoal · Fem · web app"', 'client: "Personal project · Fem · web app"'),
     ('title: "Um app para mulheres em todas as fases"', 'title: "An app for women in every life stage"'),
     ('meta: "2026 · produto de ponta a ponta · no ar"', 'meta: "2026 · end-to-end product · live"'),
@@ -67,7 +68,7 @@ PAGES['index.astro'] = [
     ('text="Trabalho selecionado" highlight="selecionado"', 'text="Selected work" highlight="work"'),
     ('CVC + 5 cases · 2022 — 2026', 'CVC + 5 case studies · 2022 — 2026'),
     ('Sob NDA · apresento ao vivo', 'Under NDA · presented live'),
-    ('text="CVC Viagens: as novas experiências do site e do app B2C" highlight="do site e do app B2C"', 'text="CVC Viagens: new experiences for the B2C website and app" highlight="for the B2C website and app"'),
+    ('text={"CVC Viagens: as novas experiências do site e\\u00a0do\\u00a0app\\u00a0B2C"} highlight="do site e do app B2C"', 'text={"CVC Viagens: new experiences for the B2C website\\u00a0and\\u00a0app"} highlight="for the B2C website and app"'),
     ('Desde abril de 2024 na maior operadora de turismo do país. Desenho as novas experiências do site e do app B2C, com UX de todos os produtos, da busca ao checkout. Também faço a sustentação de UX desses produtos e atuo no Atlas, o site usado nas lojas físicas. Como é um trabalho sob NDA, mostro telas, decisões e resultados numa conversa.',
      'Since April 2024 at Brazil\'s largest travel company. I design new experiences for the B2C website and app, covering UX for every product from search to checkout. I also provide ongoing UX support for these products and work on Atlas, the website used in physical stores. Because this work is under NDA, I present screens, decisions and results in a call.'),
     ('label="Agendar uma apresentação ↗"', 'label="Book a walkthrough ↗"'),

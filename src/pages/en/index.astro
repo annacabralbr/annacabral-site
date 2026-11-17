@@ -18,6 +18,7 @@ const cases = [
         meta: "2026 · end-to-end product · live",
         tags: "Discovery · Product · UI · Accessibility",
         src: "/img/fem/intro-1.png",
+        loader: { splash: "/img/fem/carregamento.png", after: "/img/fem/seu-dia.png", alt: "Fem home screen, Your day, with calories, workout, walking, water and protein (app in Portuguese)" },
         device: "mobile",
         cta: "Show details",
         link: "/en/cases/fem",
@@ -108,7 +109,7 @@ const cvcList = ["New website and app experiences", "UX for every product, up to
         <div class="cvc dim">
             <div class="cvc-text">
                 <p class="label">Under NDA · presented live</p>
-                <RevealText text="CVC Viagens: new experiences for the B2C website and app" highlight="for the B2C website and app" fontSize={64} />
+                <RevealText text={"CVC Viagens: new experiences for the B2C website\u00a0and\u00a0app"} highlight="for the B2C website and app" fontSize={64} />
                 <p class="body">Since April 2024 at Brazil's largest travel company. I design new experiences for the B2C website and app, covering UX for every product from search to checkout. I also provide ongoing UX support for these products and work on Atlas, the website used in physical stores. Because this work is under NDA, I present screens, decisions and results in a call.</p>
                 <PillButton client:visible primary label="Book a walkthrough ↗" link={`mailto:${EMAIL}?subject=${encodeURIComponent("CVC case walkthrough")}`} />
             </div>

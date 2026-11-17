@@ -57,6 +57,13 @@ a {
 }
 
 /* ---------- tipografia ---------- */
+/* nenhuma palavra sozinha na última linha: títulos equilibrados, textos corridos "pretty" */
+h1, h2, h3, h4, .h3 {
+    text-wrap: balance;
+}
+p, li, dd, dt, figcaption, blockquote, label {
+    text-wrap: pretty;
+}
 .h2 {
     margin: 0;
     font-size: 48px;

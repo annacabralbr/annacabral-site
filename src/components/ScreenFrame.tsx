@@ -2,6 +2,7 @@
 // está visível. Aceita vídeo (toca mudo em loop só quando visível). Desfoque opcional
 // para telas com informação confidencial, com selo explicando. Respeita "reduzir movimento".
 import { useRef, useState, useEffect, startTransition, type CSSProperties } from "react"
+import { nw } from "../lib/nowidow"
 import { motion, useInView, useReducedMotion } from "framer-motion"
 
 interface ScreenFrameProps {
@@ -104,7 +105,7 @@ export default function ScreenFrame(props: ScreenFrameProps) {
                     {blurred && (
                         <div style={{ position: "absolute", inset: 0, display: "grid", placeItems: "center", padding: 16, background: "rgba(250,250,247,0.25)" }}>
                             <span role="note" style={{ fontFamily: FONT, fontSize: 13, fontWeight: 500, lineHeight: 1.35, textAlign: "center", color: "#FAFAF7", background: INK, borderRadius: 999, padding: "10px 16px", maxWidth: "90%" }}>
-                                {blurLabel}
+                                {nw(blurLabel)}
                             </span>
                         </div>
                     )}

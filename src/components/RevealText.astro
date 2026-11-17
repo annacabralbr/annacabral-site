@@ -13,24 +13,28 @@ interface Props {
 }
 const { text, highlight = "", tag = "h2", fontSize = 64, color = "var(--ink)", align = "left" } = Astro.props
 const Tag = tag
-const words = text.split(" ")
+// Grupos separados por espaço normal podem quebrar linha; palavras unidas por espaço fixo
+// (\u00a0) ficam sempre juntas. As duas últimas palavras sempre andam juntas: nunca sobra
+// uma palavra sozinha na última linha.
 const marks = highlight.split(" ").filter(Boolean)
+const groups = text.split(" ").filter(Boolean)
+if (groups.length > 2) groups.splice(-2, 2, groups.at(-2) + "\u00a0" + groups.at(-1))
+let n = 0
+const units = groups.map((g) => g.split("\u00a0").map((w) => ({ w, i: n++ })))
+const label = text.replace(/\u00a0/g, " ")
+// HTML montado sem espaços de formatação, para o espaçamento entre palavras ficar igual
+const esc = (t: string) => t.replace(/&/g, "&amp;").replace(/</g, "&lt;")
+const html = units
+    .map((g) => `<span class="g" aria-hidden="true">${g.map((u) => `<span class="w"><span${marks.includes(u.w) ? ' class="hl"' : ""} style="--i:${Math.min(u.i, 17)}">${esc(u.w)}</span></span>`).join("&nbsp;")}</span>`)
+    .join(" ")
 const size = Math.round(fontSize * 0.78)
 const mobile = Math.min(size, Math.max(28, Math.round(size * 0.5)))
 const tablet = Math.min(size, Math.max(mobile, Math.round(size * 0.72)))
 ---
 
 <div class="rt-box">
-    <Tag class:list={["rt", "rv", align === "center" && "center"]} aria-label={text} style={`--size:${size}px;--tablet:${tablet}px;--mobile:${mobile}px;color:${color}`}>
-        {
-            words.map((w, i) => (
-                <span class="w" aria-hidden="true">
-                    <span class:list={[marks.includes(w) && "hl"]} style={`--i:${Math.min(i, 17)}`}>
-                        {w}
-                    </span>
-                </span>
-            ))
-        }
+    <Tag class:list={["rt", "rv", align === "center" && "center"]} aria-label={label} style={`--size:${size}px;--tablet:${tablet}px;--mobile:${mobile}px;color:${color}`}>
+        <Fragment set:html={html} />
     </Tag>
 </div>
 
@@ -47,25 +51,26 @@ const tablet = Math.min(size, Math.max(mobile, Math.round(size * 0.72)))
         font-size: var(--size);
         line-height: 1;
         letter-spacing: -0.035em;
-        display: flex;
-        flex-wrap: wrap;
-        column-gap: 0.24em;
+        display: block;
+        word-spacing: 0.02em;
         text-wrap: balance;
     }
+    .rt :global(.g) {
+        white-space: nowrap;
+    }
     .center {
-        justify-content: center;
         text-align: center;
     }
-    .w {
+    .rt :global(.w) {
         display: inline-block;
         overflow: hidden;
         padding-bottom: 0.12em;
         margin-bottom: -0.12em;
     }
-    .w > span {
+    .rt :global(.w > span) {
         display: inline-block;
     }
-    .hl {
+    .rt :global(.hl) {
         opacity: 0.42;
     }
     @container (max-width: 759px) {

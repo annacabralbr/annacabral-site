@@ -100,6 +100,18 @@ const canonical = new URL(Astro.url.pathname, Astro.site)
                 )
                 items.forEach((el) => io.observe(el))
             }
+            // reforço para navegadores sem text-wrap: pretty: une as duas últimas palavras
+            // de cada parágrafo e título com espaço fixo (fora das ilhas React)
+            document.querySelectorAll("main p, main li, main h1, main h2, main h3, main h4, main dd, footer p").forEach((el) => {
+                if (el.closest("astro-island") || el.classList.contains("rt")) return
+                const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT)
+                let last: Text | null = null
+                while (walker.nextNode()) if ((walker.currentNode as Text).data.trim()) last = walker.currentNode as Text
+                if (!last) return
+                const words = (el.textContent || "").trim().split(/\s+/)
+                if (words.length < 4) return
+                last.data = last.data.replace(/\s+(\S+\s*)$/, " $1")
+            })
         </script>
     </body>
 </html>
